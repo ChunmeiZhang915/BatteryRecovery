@@ -1,11 +1,11 @@
-#include"stdafx.h"
+ï»¿#include"stdafx.h"
 #include"Network.h"
 Network::Network( ){
 }
 Network::~Network(){
 }
 
-void Network::ConstructNetwork(){//¹¹½¨Ò»¸öÍøÂç£¬½Úµã¾ùÔÈ·Ö²¼
+void Network::ConstructNetwork(){//æ„å»ºä¸€ä¸ªç½‘ç»œï¼ŒèŠ‚ç‚¹å‡åŒ€åˆ†å¸ƒ
 	ofstream initialPosFile("IniPos.txt", ios_base::out | ios_base::trunc);
 	if(initialPosFile.fail()){
 		ofstream outLogFile("log.txt", ios_base::out | ios_base::app);
@@ -20,7 +20,7 @@ void Network::ConstructNetwork(){//¹¹½¨Ò»¸öÍøÂç£¬½Úµã¾ùÔÈ·Ö²¼
 	}
 	initialPosFile.close();
 }
-void Network::ConstructNetworkWithFixedPositon(){//¹Ì¶¨Î»ÖÃµÄ½Úµã£¬´î½¨ÍøÂç
+void Network::ConstructNetworkWithFixedPositon(){//å›ºå®šä½ç½®çš„èŠ‚ç‚¹ï¼Œæ­å»ºç½‘ç»œ
 	ifstream inFile("IniPos.txt", ios_base::in);
 	//ifstream inFile("FixPos.txt", ios_base::in);
 	if(inFile.fail()){
@@ -38,30 +38,30 @@ void Network::ConstructNetworkWithFixedPositon(){//¹Ì¶¨Î»ÖÃµÄ½Úµã£¬´î½¨ÍøÂç
 	}
 	inFile.close();
 }
-void Network::GatherInformation(){//ÊÕ¼¯ÁÚ¾Ó½ÚµãµÄĞÅÏ¢£ºÆäÁÚ¾ÓµÄÁÚ¾ÓĞÅÏ¢£¨ÄÜÁ¿£¬¹¤×÷Ê±¼ä£©
-	for(int i = 0; i < NODE_NUMBER; ++i){//sink½ÚµãÒ²ĞèÒªÊÕ¼¯ÁÚ¾ÓĞÅÏ¢
-		//½Úµã·¢ËÍÒ»¸öÊı¾İ°üĞèÒªÏûºÄµÄÄÜÁ¿
+void Network::GatherInformation(){//æ”¶é›†é‚»å±…èŠ‚ç‚¹çš„ä¿¡æ¯ï¼šå…¶é‚»å±…çš„é‚»å±…ä¿¡æ¯ï¼ˆèƒ½é‡ï¼Œå·¥ä½œæ—¶é—´ï¼‰
+	for(int i = 0; i < NODE_NUMBER; ++i){//sinkèŠ‚ç‚¹ä¹Ÿéœ€è¦æ”¶é›†é‚»å±…ä¿¡æ¯
+		//èŠ‚ç‚¹å‘é€ä¸€ä¸ªæ•°æ®åŒ…éœ€è¦æ¶ˆè€—çš„èƒ½é‡
 		//nodes[i]->AddEnergy(-SEND_PACKET_ENERGY);
 		for(int j = 0; j < NODE_NUMBER; ++j){
 			if(i == j){
 				continue;
 			}
 			if(DIS(nodes[i]->GetXLoc(), nodes[i]->GetYLoc(), nodes[j]->GetXLoc(), nodes[j]->GetYLoc()) < nodes[i]->GetTransDis()){
-				//¿ÉÒÔÊµÏÖÍ¨ĞÅ¾àÀëµÄ²»¶Ô³Æ
+				//å¯ä»¥å®ç°é€šä¿¡è·ç¦»çš„ä¸å¯¹ç§°
 				nodes[i]->AddNeighbors(j);
-				//½ÓÊÕÁÚ¾ÓµÄ½ÚµãµÄÊı¾İ°ü£¬ĞèÒªÏûºÄÄÜÁ¿
+				//æ¥æ”¶é‚»å±…çš„èŠ‚ç‚¹çš„æ•°æ®åŒ…ï¼Œéœ€è¦æ¶ˆè€—èƒ½é‡
 				//nodes[i]->AddEnergy(-RECEIVE_PACKET_ENERGY);
 			}
 		}
 	}
 }
-void Network::MarkingProcess(){//¸ù¾İ½ÚµãµÄÄÜÁ¿£¬¹¤×÷Ê±¼äµÈĞÅÏ¢±ê¼Ç½ÚµãÊÇ·ñÊÇGateway Node
+void Network::MarkingProcess(){//æ ¹æ®èŠ‚ç‚¹çš„èƒ½é‡ï¼Œå·¥ä½œæ—¶é—´ç­‰ä¿¡æ¯æ ‡è®°èŠ‚ç‚¹æ˜¯å¦æ˜¯Gateway Node
 	nodes[0]->SetNodeStatus(NonGatewayNode);
-	for(int i = 1; i < NODE_NUMBER; ++i){//sink½Úµã²»ĞèÒª£¬Ò»Ö±´¦ÓÚ¹¤×÷×´Ì¬
+	for(int i = 1; i < NODE_NUMBER; ++i){//sinkèŠ‚ç‚¹ä¸éœ€è¦ï¼Œä¸€ç›´å¤„äºå·¥ä½œçŠ¶æ€
 		nodes[i]->MakeSureIsGatewayNodeOrNot();
 	}
 }
-void Network::AddRules(const int & time){//¾«¼òdominating setµÄ´óĞ¡
+void Network::AddRules(const int & time){//ç²¾ç®€dominating setçš„å¤§å°
 	for(int i = 1; i < NODE_NUMBER; ++i){
 		if(nodes[i]->IsGatewayNodeOrNot() == GatewayNode){
 			nodes[i]->FurtherDecision(time);
@@ -121,14 +121,14 @@ void Network::Run(){
 	GatherInformation();
 	MarkingProcess();
 	AddRules(-1);
-	for(int n = 0; n < NODE_NUMBER; ++n){//sink½Úµã²»ÒÆ¶¯
+	for(int n = 0; n < NODE_NUMBER; ++n){//sinkèŠ‚ç‚¹ä¸ç§»åŠ¨
 		nodes[n]->AddTime();
 		nodes[n]->UpdateRoutingTable();						
 	}
 	for(int i = 1; ; ++i){
 		if(i % UPDATE_DURATION == 0){
 			nodes[0]->ClearInfo();		
-			for(int n = 1; n < NODE_NUMBER; ++n){//sink½Úµã²»ÒÆ¶¯
+			for(int n = 1; n < NODE_NUMBER; ++n){//sinkèŠ‚ç‚¹ä¸ç§»åŠ¨
 				if(nodes[n]->GetBattery()->GetCapacity() <= 0){
 					return;
 				}
@@ -137,11 +137,11 @@ void Network::Run(){
 			GatherInformation();
 			MarkingProcess();
 			AddRules(i);
-			for(int n = 0; n < NODE_NUMBER; ++n){//sink½Úµã²»ÒÆ¶¯				
+			for(int n = 0; n < NODE_NUMBER; ++n){//sinkèŠ‚ç‚¹ä¸ç§»åŠ¨				
 				nodes[n]->UpdateRoutingTable();						
 			}
 		}else{
-			for(int n = 1; n < NODE_NUMBER; ++n){//sink½Úµã²»ÒÆ¶¯
+			for(int n = 1; n < NODE_NUMBER; ++n){//sinkèŠ‚ç‚¹ä¸ç§»åŠ¨
 				if(nodes[n]->GetBattery()->GetCapacity() <= 0){
 					return;
 				}
@@ -149,9 +149,9 @@ void Network::Run(){
 				nodes[n]->PacketGenerating(i);			
 			}
 		}
-		//²úÉúÊı¾İ°ü
-		//Â·ÓÉµ¼ÖÂµÄ½ÚµãÄÜÁ¿±ä»¯
-		//ÅĞ¶ÏÍøÂçÊÇ·ñÌ±»¾À²À²À²À²
+		//äº§ç”Ÿæ•°æ®åŒ…
+		//è·¯ç”±å¯¼è‡´çš„èŠ‚ç‚¹èƒ½é‡å˜åŒ–
+		//åˆ¤æ–­ç½‘ç»œæ˜¯å¦ç˜«ç—ªå•¦å•¦å•¦å•¦
 		
 
 		

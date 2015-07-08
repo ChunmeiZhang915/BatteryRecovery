@@ -1,7 +1,7 @@
-#include"stdafx.h"
+ï»¿#include"stdafx.h"
 #include"Node.h"
 
-vector<Node*> nodes;//ÍøÂçÖĞµÄ½Úµã
+vector<Node*> nodes;//ç½‘ç»œä¸­çš„èŠ‚ç‚¹
 
 Node::Node(int nodeId){
 	id = nodeId;
@@ -43,7 +43,7 @@ void Node::CopyNode(const int& nodeId, const double& x, const double& y, const N
 	neis.clear();
 	neis = str;
 }
-void Node::BroadcastPhase(){//¹ã²¥½×¶Î
+void Node::BroadcastPhase(){//å¹¿æ’­é˜¶æ®µ
 	assert(currentWorkState == Receiving);
 	for(int i = 0; i < NODE_NUMBER; ++i){
 		if(i == GetId()){
@@ -54,36 +54,36 @@ void Node::BroadcastPhase(){//¹ã²¥½×¶Î
 		}
 	}
 }
-void Node::MakeSureIsGatewayNodeOrNot(){//È·¶¨×Ô¼ºÊÇ·ñÊÇgateway node,Ö»ÊÇ³õ²½È·¶¨¶øÒÑ
+void Node::MakeSureIsGatewayNodeOrNot(){//ç¡®å®šè‡ªå·±æ˜¯å¦æ˜¯gateway node,åªæ˜¯åˆæ­¥ç¡®å®šè€Œå·²
 	assert(currentWorkState == Receiving);
 	//assert(relaxingTime == 0);
 	if(m_Battery->GetEnergyGrade() <= 0){
 		ofstream outLogFile("log.txt", ios_base::out | ios_base::app);
 		assert(!outLogFile.fail());
-		outLogFile<<__TIME__<<"½Úµã"<<id<<"µç³ØºÄ¾¡À²><"<<endl;
+		outLogFile<<__TIME__<<"èŠ‚ç‚¹"<<id<<"ç”µæ± è€—å°½å•¦><"<<endl;
 		outLogFile.close();
 		return;
 	}
 	if(neighbors.size() == 0){
 		ofstream outLogFile("log.txt", ios_base::out | ios_base::app);
 		assert(!outLogFile.fail());
-		outLogFile<<__TIME__<<"½Úµã"<<id<< "¹ÂÁ¢"<<endl;
+		outLogFile<<__TIME__<<"èŠ‚ç‚¹"<<id<< "å­¤ç«‹"<<endl;
 		outLogFile.close();
-		return;//ÓĞÒ»¸ö½ÚµãÊÇ²»Á¬Í¨£¬fail to get a dominating set,ÍøÂçÌ±»¾
+		return;//æœ‰ä¸€ä¸ªèŠ‚ç‚¹æ˜¯ä¸è¿é€šï¼Œfail to get a dominating set,ç½‘ç»œç˜«ç—ª
 	}
-	if(neighbors.size() == 1){//¼´Ê¹Õâ¸öÎ¨Ò»µÄÁÚ¾ÓÒÑ¾­ÊÇgateway½ÚµãÀ²£¬¿ÉÒÔÔÚfurtherdecisionÖĞ½øĞĞ±È½ÏÑ¡Ôñ±È½ÏºÏÀíµÄÒ»¸ö
+	if(neighbors.size() == 1){//å³ä½¿è¿™ä¸ªå”¯ä¸€çš„é‚»å±…å·²ç»æ˜¯gatewayèŠ‚ç‚¹å•¦ï¼Œå¯ä»¥åœ¨furtherdecisionä¸­è¿›è¡Œæ¯”è¾ƒé€‰æ‹©æ¯”è¾ƒåˆç†çš„ä¸€ä¸ª
 		currentState = GatewayNode;
 		return;
 	}
 	currentState = NonGatewayNode;	
-	for(size_t i = 0; i < neighbors.size(); ++i){//Node 0ÊÇsink½Úµã£¬ÎÒÃÇÔ¼¶¨sink½Úµã
+	for(size_t i = 0; i < neighbors.size(); ++i){//Node 0æ˜¯sinkèŠ‚ç‚¹ï¼Œæˆ‘ä»¬çº¦å®šsinkèŠ‚ç‚¹
 		size_t j = 0;
 		for(; j < neighbors.size(); ++j){
 			if(neighbors[i] == neighbors[j]){
 				continue;
 			}
 			if(DIS(nodes[neighbors[i]]->GetXLoc(), nodes[neighbors[i]]->GetYLoc(),nodes[neighbors[j]]->GetXLoc(), nodes[neighbors[j]]->GetYLoc()) >= nodes[neighbors[i]]->GetTransDis()){
-				//ÊµÏÖÍ¨ĞÅ¾àÀëµÄ²»¶Ô³Æ£¬ Èç¹û¸Ã½ÚµãµÄÁ½¸ö½ÚµãÃ»ÓĞÖ±½ÓÍ¨ĞÅ£¬Ôò¸Ã½Úµã¾ÍÓ¦¸Ã±ê¼ÇÎªgateway node
+				//å®ç°é€šä¿¡è·ç¦»çš„ä¸å¯¹ç§°ï¼Œ å¦‚æœè¯¥èŠ‚ç‚¹çš„ä¸¤ä¸ªèŠ‚ç‚¹æ²¡æœ‰ç›´æ¥é€šä¿¡ï¼Œåˆ™è¯¥èŠ‚ç‚¹å°±åº”è¯¥æ ‡è®°ä¸ºgateway node
 				currentState = GatewayNode;
 				break;
 			}
@@ -93,17 +93,17 @@ void Node::MakeSureIsGatewayNodeOrNot(){//È·¶¨×Ô¼ºÊÇ·ñÊÇgateway node,Ö»ÊÇ³õ²½È·¶
 		}
 	}
 }
-void Rule1(int id1, int id2){//Á½¸ö½ÚµãÖ®¼äµÄ±È½Ï£¬¾ö¶¨id1ÊÇ²»ÊÇgateway½Úµã
+void Rule1(int id1, int id2){//ä¸¤ä¸ªèŠ‚ç‚¹ä¹‹é—´çš„æ¯”è¾ƒï¼Œå†³å®šid1æ˜¯ä¸æ˜¯gatewayèŠ‚ç‚¹
 	/*if(nodes[id1]->IsGatewayNodeOrNot () == NonGatewayNode || nodes[id2]->IsGatewayNodeOrNot() == NonGatewayNode){
 		return;
 	}
 	*/	
-	//¼ÓÉÏ¹¤×÷Ê±¼äµÄ±È½Ï£¬ÊÇ¾àÀëÉÏÒ»´ÎĞİÏ¢µÄÊ±¼ä£¬»¹ÊÇ´ÓÒ»¿ªÊ¼¹¤×÷µÄÊ±¼ä	
+	//åŠ ä¸Šå·¥ä½œæ—¶é—´çš„æ¯”è¾ƒï¼Œæ˜¯è·ç¦»ä¸Šä¸€æ¬¡ä¼‘æ¯çš„æ—¶é—´ï¼Œè¿˜æ˜¯ä»ä¸€å¼€å§‹å·¥ä½œçš„æ—¶é—´	
 	//if(nodes[id1]->GetWorkingTime() >= MAX_WORK_TIME || (nodes[id1]->GetRelaxingTime() > 0 && nodes[id1]->GetRelaxingTime() < THRESHOLD)){
 	//	nodes[id1]->SetNodeStatus( NonGatewayNode);//
 	//	return;
 	//}
-		if(nodes[id1]->GetWorkingTime() > nodes[id2]->GetWorkingTime()){//¸Ã½Úµã»á½ÏÔçµÄ´ïµ½Ç¿ÖÆĞİÏ¢µÄ´¥µã£¬²»ÈçÏÖÔÚ¾ÍÍ£Ö¹
+		if(nodes[id1]->GetWorkingTime() > nodes[id2]->GetWorkingTime()){//è¯¥èŠ‚ç‚¹ä¼šè¾ƒæ—©çš„è¾¾åˆ°å¼ºåˆ¶ä¼‘æ¯çš„è§¦ç‚¹ï¼Œä¸å¦‚ç°åœ¨å°±åœæ­¢
 			nodes[id1]->SetNodeStatus(NonGatewayNode);
 		}else{
 			if(nodes[id1]->GetWorkingTime() == nodes[id2]->GetWorkingTime()){
@@ -111,15 +111,15 @@ void Rule1(int id1, int id2){//Á½¸ö½ÚµãÖ®¼äµÄ±È½Ï£¬¾ö¶¨id1ÊÇ²»ÊÇgateway½Úµã
 					nodes[id1]->SetNodeStatus(NonGatewayNode);
 				}else{
 					if(nodes[id1]->GetRelaxingTime() == nodes[id2]->GetRelaxingTime()){
-						if(nodes[id1]->GetBattery()->GetEnergyGrade() < nodes[id2]->GetBattery()->GetEnergyGrade()){//ÄÜÁ¿µÈ¼¶±È½Ï
+						if(nodes[id1]->GetBattery()->GetEnergyGrade() < nodes[id2]->GetBattery()->GetEnergyGrade()){//èƒ½é‡ç­‰çº§æ¯”è¾ƒ
 							nodes[id1]->SetNodeStatus(NonGatewayNode);
 						}else{
 							if(nodes[id1]->GetBattery()->GetEnergyGrade() == nodes[id2]->GetBattery()->GetEnergyGrade()){
-								if(nodes[id1]->GetNeighbors().size() < nodes[id2]->GetNeighbors().size()){//½ÚµãµÄ¶È
+								if(nodes[id1]->GetNeighbors().size() < nodes[id2]->GetNeighbors().size()){//èŠ‚ç‚¹çš„åº¦
 									nodes[id1]->SetNodeStatus(NonGatewayNode);
 								}else{
 									if(nodes[id1]->GetNeighbors().size() == nodes[id2]->GetNeighbors().size()){//
-										if(nodes[id1]->GetId() < nodes[id2]->GetId()){//½ÚµãId break a tie
+										if(nodes[id1]->GetId() < nodes[id2]->GetId()){//èŠ‚ç‚¹Id break a tie
 											nodes[id1]->SetNodeStatus(NonGatewayNode);
 										}
 									}
@@ -133,15 +133,15 @@ void Rule1(int id1, int id2){//Á½¸ö½ÚµãÖ®¼äµÄ±È½Ï£¬¾ö¶¨id1ÊÇ²»ÊÇgateway½Úµã
 	}
 }
 void Rule11(int id1, int id2){//Wu Jie's method
-	if(nodes[id1]->GetBattery()->GetEnergyGrade() < nodes[id2]->GetBattery()->GetEnergyGrade()){//ÄÜÁ¿µÈ¼¶±È½Ï
+	if(nodes[id1]->GetBattery()->GetEnergyGrade() < nodes[id2]->GetBattery()->GetEnergyGrade()){//èƒ½é‡ç­‰çº§æ¯”è¾ƒ
 		nodes[id1]->SetNodeStatus(NonGatewayNode);
 	}else{
 		if(nodes[id1]->GetBattery()->GetEnergyGrade() == nodes[id2]->GetBattery()->GetEnergyGrade()){
-			if(nodes[id1]->GetNeighbors().size() < nodes[id2]->GetNeighbors().size()){//½ÚµãµÄ¶È
+			if(nodes[id1]->GetNeighbors().size() < nodes[id2]->GetNeighbors().size()){//èŠ‚ç‚¹çš„åº¦
 				nodes[id1]->SetNodeStatus(NonGatewayNode);
 			}else{
 				if(nodes[id1]->GetNeighbors().size() == nodes[id2]->GetNeighbors().size()){//
-					if(nodes[id1]->GetId() < nodes[id2]->GetId()){//½ÚµãId break a tie
+					if(nodes[id1]->GetId() < nodes[id2]->GetId()){//èŠ‚ç‚¹Id break a tie
 						nodes[id1]->SetNodeStatus(NonGatewayNode);
 					}
 				}
@@ -169,15 +169,15 @@ void Rule2(int id1, int id2, int id3){
 					nodes[id1]->SetNodeStatus(NonGatewayNode);
 				}else{
 					if(nodes[id1]->GetRelaxingTime() == nodes[id2]->GetRelaxingTime()){
-						if(nodes[id1]->GetBattery()->GetEnergyGrade() < nodes[id2]->GetBattery()->GetEnergyGrade()){//ÄÜÁ¿µÈ¼¶±È½Ï
+						if(nodes[id1]->GetBattery()->GetEnergyGrade() < nodes[id2]->GetBattery()->GetEnergyGrade()){//èƒ½é‡ç­‰çº§æ¯”è¾ƒ
 							nodes[id1]->SetNodeStatus(NonGatewayNode);
 						}else{
 							if(nodes[id1]->GetBattery()->GetEnergyGrade() == nodes[id2]->GetBattery()->GetEnergyGrade()){
-								if(nodes[id1]->GetNeighbors().size() < nodes[id2]->GetNeighbors().size()){//½ÚµãµÄ¶È
+								if(nodes[id1]->GetNeighbors().size() < nodes[id2]->GetNeighbors().size()){//èŠ‚ç‚¹çš„åº¦
 									nodes[id1]->SetNodeStatus(NonGatewayNode);
 								}else{
 									if(nodes[id1]->GetNeighbors().size() == nodes[id2]->GetNeighbors().size()){//
-										if(nodes[id1]->GetId() < nodes[id2]->GetId()){//½ÚµãId break a tie
+										if(nodes[id1]->GetId() < nodes[id2]->GetId()){//èŠ‚ç‚¹Id break a tie
 											nodes[id1]->SetNodeStatus(NonGatewayNode);
 										}
 									}
@@ -195,15 +195,15 @@ void Rule2(int id1, int id2, int id3){
 				}else{
 					if(nodes[id1]->GetRelaxingTime() == nodes[id2]->GetRelaxingTime()
 						&&nodes[id1]->GetRelaxingTime() < nodes[id3]->GetRelaxingTime()){
-						if(nodes[id1]->GetBattery()->GetEnergyGrade() < nodes[id2]->GetBattery()->GetEnergyGrade()){//ÄÜÁ¿µÈ¼¶±È½Ï
+						if(nodes[id1]->GetBattery()->GetEnergyGrade() < nodes[id2]->GetBattery()->GetEnergyGrade()){//èƒ½é‡ç­‰çº§æ¯”è¾ƒ
 							nodes[id1]->SetNodeStatus(NonGatewayNode);
 						}else{
 							if(nodes[id1]->GetBattery()->GetEnergyGrade() == nodes[id2]->GetBattery()->GetEnergyGrade()){
-								if(nodes[id1]->GetNeighbors().size() < nodes[id2]->GetNeighbors().size()){//½ÚµãµÄ¶È
+								if(nodes[id1]->GetNeighbors().size() < nodes[id2]->GetNeighbors().size()){//èŠ‚ç‚¹çš„åº¦
 									nodes[id1]->SetNodeStatus(NonGatewayNode);
 								}else{
 									if(nodes[id1]->GetNeighbors().size() == nodes[id2]->GetNeighbors().size()){//
-										if(nodes[id1]->GetId() < nodes[id2]->GetId()){//½ÚµãId break a tie
+										if(nodes[id1]->GetId() < nodes[id2]->GetId()){//èŠ‚ç‚¹Id break a tie
 											nodes[id1]->SetNodeStatus(NonGatewayNode);
 										}
 									}
@@ -214,16 +214,16 @@ void Rule2(int id1, int id2, int id3){
 						if(nodes[id1]->GetRelaxingTime() == nodes[id2]->GetRelaxingTime()
 							&&nodes[id1]->GetRelaxingTime() == nodes[id3]->GetRelaxingTime()){
 							if(nodes[id1]->GetBattery()->GetEnergyGrade() < nodes[id2]->GetBattery()->GetEnergyGrade()
-								&& nodes[id1]->GetBattery()->GetEnergyGrade() < nodes[id3]->GetBattery()->GetEnergyGrade()){//ÄÜÁ¿µÈ¼¶±È½Ï
+								&& nodes[id1]->GetBattery()->GetEnergyGrade() < nodes[id3]->GetBattery()->GetEnergyGrade()){//èƒ½é‡ç­‰çº§æ¯”è¾ƒ
 								nodes[id1]->SetNodeStatus(NonGatewayNode);
 							}else{
 								if(nodes[id1]->GetBattery()->GetEnergyGrade() == nodes[id2]->GetBattery()->GetEnergyGrade()
 									&& nodes[id1]->GetBattery()->GetEnergyGrade() < nodes[id3]->GetBattery()->GetEnergyGrade()){
-									if(nodes[id1]->GetNeighbors().size() < nodes[id2]->GetNeighbors().size()){//½ÚµãµÄ¶È
+									if(nodes[id1]->GetNeighbors().size() < nodes[id2]->GetNeighbors().size()){//èŠ‚ç‚¹çš„åº¦
 										nodes[id1]->SetNodeStatus(NonGatewayNode);
 									}else{
 										if(nodes[id1]->GetNeighbors().size() == nodes[id2]->GetNeighbors().size()){//
-											if(nodes[id1]->GetId() < nodes[id2]->GetId()){//½ÚµãId break a tie
+											if(nodes[id1]->GetId() < nodes[id2]->GetId()){//èŠ‚ç‚¹Id break a tie
 												nodes[id1]->SetNodeStatus(NonGatewayNode);
 											}
 										}
@@ -232,18 +232,18 @@ void Rule2(int id1, int id2, int id3){
 									if(nodes[id1]->GetBattery()->GetEnergyGrade() == nodes[id2]->GetBattery()->GetEnergyGrade()
 										&& nodes[id1]->GetBattery()->GetEnergyGrade() == nodes[id3]->GetBattery()->GetEnergyGrade()){
 										if(nodes[id1]->GetNeighbors().size() < nodes[id2]->GetNeighbors().size()
-											&& nodes[id1]->GetNeighbors().size() < nodes[id3]->GetNeighbors().size()){//½ÚµãµÄ¶È
+											&& nodes[id1]->GetNeighbors().size() < nodes[id3]->GetNeighbors().size()){//èŠ‚ç‚¹çš„åº¦
 											nodes[id1]->SetNodeStatus(NonGatewayNode);
 										}else{
 											if(nodes[id1]->GetNeighbors().size() == nodes[id2]->GetNeighbors().size()
 												&& nodes[id1]->GetNeighbors().size() < nodes[id3]->GetNeighbors().size()){//
-												if(nodes[id1]->GetId() < nodes[id2]->GetId()){//½ÚµãId break a tie
+												if(nodes[id1]->GetId() < nodes[id2]->GetId()){//èŠ‚ç‚¹Id break a tie
 													nodes[id1]->SetNodeStatus(NonGatewayNode);
 												}
 											}else{
 												if(nodes[id1]->GetNeighbors().size() == nodes[id2]->GetNeighbors().size()
 												&& nodes[id1]->GetNeighbors().size() == nodes[id3]->GetNeighbors().size()){//
-													if(nodes[id1]->GetId() < nodes[id2]->GetId() && nodes[id1]->GetId() < nodes[id3]->GetId()){//½ÚµãId break a tie
+													if(nodes[id1]->GetId() < nodes[id2]->GetId() && nodes[id1]->GetId() < nodes[id3]->GetId()){//èŠ‚ç‚¹Id break a tie
 														nodes[id1]->SetNodeStatus(NonGatewayNode);
 													}
 												}
@@ -262,18 +262,18 @@ void Rule2(int id1, int id2, int id3){
 }
 void Rule22(int id1, int id2, int id3){
 	if(nodes[id1]->GetBattery()->GetEnergyGrade() < nodes[id2]->GetBattery()->GetEnergyGrade()
-		&& nodes[id1]->GetBattery()->GetEnergyGrade() < nodes[id3]->GetBattery()->GetEnergyGrade()){//ÄÜÁ¿µÈ¼¶±È½Ï
+		&& nodes[id1]->GetBattery()->GetEnergyGrade() < nodes[id3]->GetBattery()->GetEnergyGrade()){//èƒ½é‡ç­‰çº§æ¯”è¾ƒ
 		nodes[id1]->SetNodeStatus(NonGatewayNode);
 	}else{
 		if(nodes[id1]->GetBattery()->GetEnergyGrade() == nodes[id2]->GetBattery()->GetEnergyGrade()
 			&&nodes[id1]->GetBattery()->GetEnergyGrade() < nodes[id3]->GetBattery()->GetEnergyGrade()){
 				
 				
-			if(nodes[id1]->GetNeighbors().size() < nodes[id2]->GetNeighbors().size()){//½ÚµãµÄ¶È
+			if(nodes[id1]->GetNeighbors().size() < nodes[id2]->GetNeighbors().size()){//èŠ‚ç‚¹çš„åº¦
 				nodes[id1]->SetNodeStatus(NonGatewayNode);
 			}else{
 				if(nodes[id1]->GetNeighbors().size() == nodes[id2]->GetNeighbors().size()){//
-					if(nodes[id1]->GetId() < nodes[id2]->GetId()){//½ÚµãId break a tie
+					if(nodes[id1]->GetId() < nodes[id2]->GetId()){//èŠ‚ç‚¹Id break a tie
 						nodes[id1]->SetNodeStatus(NonGatewayNode);
 					}
 				}
@@ -285,18 +285,18 @@ void Rule22(int id1, int id2, int id3){
 				&&nodes[id1]->GetBattery()->GetEnergyGrade() == nodes[id3]->GetBattery()->GetEnergyGrade()){
 				
 				if(nodes[id1]->GetNeighbors().size() < nodes[id2]->GetNeighbors().size()
-							&& nodes[id1]->GetNeighbors().size() < nodes[id3]->GetNeighbors().size()){//½ÚµãµÄ¶È
+							&& nodes[id1]->GetNeighbors().size() < nodes[id3]->GetNeighbors().size()){//èŠ‚ç‚¹çš„åº¦
 							nodes[id1]->SetNodeStatus(NonGatewayNode);
 				}else{
 					if(nodes[id1]->GetNeighbors().size() == nodes[id2]->GetNeighbors().size()
 						&& nodes[id1]->GetNeighbors().size() < nodes[id3]->GetNeighbors().size()){//
-						if(nodes[id1]->GetId() < nodes[id2]->GetId()){//½ÚµãId break a tie
+						if(nodes[id1]->GetId() < nodes[id2]->GetId()){//èŠ‚ç‚¹Id break a tie
 							nodes[id1]->SetNodeStatus(NonGatewayNode);
 						}
 					}else{
 						if(nodes[id1]->GetNeighbors().size() == nodes[id2]->GetNeighbors().size()
 						&& nodes[id1]->GetNeighbors().size() == nodes[id3]->GetNeighbors().size()){//
-							if(nodes[id1]->GetId() < nodes[id2]->GetId() && nodes[id1]->GetId() < nodes[id3]->GetId()){//½ÚµãId break a tie
+							if(nodes[id1]->GetId() < nodes[id2]->GetId() && nodes[id1]->GetId() < nodes[id3]->GetId()){//èŠ‚ç‚¹Id break a tie
 								nodes[id1]->SetNodeStatus(NonGatewayNode);
 							}
 						}
@@ -308,20 +308,20 @@ void Rule22(int id1, int id2, int id3){
 			}
 		}
 }
-void Node::FurtherDecision(const int& time){//½øÒ»²½È·¶¨×Ô¼ºÊÇ²»ÊÇgateway node£¬´Ó¶ø¾«¼òdominating setµÄ´óĞ¡
+void Node::FurtherDecision(const int& time){//è¿›ä¸€æ­¥ç¡®å®šè‡ªå·±æ˜¯ä¸æ˜¯gateway nodeï¼Œä»è€Œç²¾ç®€dominating setçš„å¤§å°
 	assert(currentState == GatewayNode);
 	assert(currentWorkState == Receiving);
 	/*if(currentWorkState == Sleeping){
 		ofstream outLogFile("log.txt", ios_base::out | ios_base::app);
 		assert(!outLogFile.fail());
-		outLogFile<<__TIME__<<"½Úµã"<<id<<"¶¼Ë¯×ÅÁË£¬»¹ÔõÃ´½øÒ»²½ÅĞ¶Ï×Ô¼ºÊÇ²»ÊÇgateway°¡°¡°¡><"<<endl;
+		outLogFile<<__TIME__<<"èŠ‚ç‚¹"<<id<<"éƒ½ç¡ç€äº†ï¼Œè¿˜æ€ä¹ˆè¿›ä¸€æ­¥åˆ¤æ–­è‡ªå·±æ˜¯ä¸æ˜¯gatewayå•Šå•Šå•Š><"<<endl;
 		outLogFile.close();
 		return;
 	}*/
 	if(m_Battery->GetEnergyGrade() <= 0){
 		ofstream outLogFile("log.txt", ios_base::out | ios_base::app);
 		assert(!outLogFile.fail());
-		outLogFile<<__TIME__<<"½Úµã"<<id<<"µç³ØºÄ¾¡À²><"<<endl;
+		outLogFile<<__TIME__<<"èŠ‚ç‚¹"<<id<<"ç”µæ± è€—å°½å•¦><"<<endl;
 		outLogFile.close();
 		return;
 	}
@@ -329,7 +329,7 @@ void Node::FurtherDecision(const int& time){//½øÒ»²½È·¶¨×Ô¼ºÊÇ²»ÊÇgateway node£¬
 	for(size_t i = 0; i < neighbors.size(); ++i){
 		if(nodes[neighbors[i]]->IsGatewayNodeOrNot() == GatewayNode){
 			if(VectorBelong2Vector(neighbors,id, nodes[neighbors[i]]->GetNeighbors(), neighbors[i])){
-				//Èç¹ûµ±Ç°½ÚµãµÄËùÓĞÁÚ¾ÓÒ²ÊÇÆäÁÚ¾Ógateway½Úµãneighbor[i]µÄÁÚ¾Ó
+				//å¦‚æœå½“å‰èŠ‚ç‚¹çš„æ‰€æœ‰é‚»å±…ä¹Ÿæ˜¯å…¶é‚»å±…gatewayèŠ‚ç‚¹neighbor[i]çš„é‚»å±…
 				Rule1(id, neighbors[i]);
 				//Rule11(id, neighbors[i]);
 			}
@@ -407,7 +407,7 @@ void Node::FurtherDecision(const int& time){//½øÒ»²½È·¶¨×Ô¼ºÊÇ²»ÊÇgateway node£¬
 				}
 			}
 			if(n == nodes[neighbors[i]]->GetNeighbors().size()){
-				//µ±Ç°ÁÚ¾ÓµÄÒ»¸öNonGateway½ÚµãÃ»ÓĞÆäËûGateway½ÚµãÁÚ¾ÓÁË£¬Ö»ÓĞ¸Ã½ÚµãÒ»¸ö£¬ºÃ¿ÉÁ¯°¡TQT,µ±Ç°½Úµã²»ÄÜ¸ÄÎªnongatwayNodeÀ²
+				//å½“å‰é‚»å±…çš„ä¸€ä¸ªNonGatewayèŠ‚ç‚¹æ²¡æœ‰å…¶ä»–GatewayèŠ‚ç‚¹é‚»å±…äº†ï¼Œåªæœ‰è¯¥èŠ‚ç‚¹ä¸€ä¸ªï¼Œå¥½å¯æ€œå•ŠTQT,å½“å‰èŠ‚ç‚¹ä¸èƒ½æ”¹ä¸ºnongatwayNodeå•¦
 				return;
 			}
 		}else{
@@ -424,11 +424,11 @@ void Node::FurtherDecision(const int& time){//½øÒ»²½È·¶¨×Ô¼ºÊÇ²»ÊÇgateway node£¬
 								if(nodes[neighbors[i]]->GetNeighbors()[x] == nodes[neighbors[m]]->GetNeighbors()[y]
 								&& nodes[nodes[neighbors[i]]->GetNeighbors()[x]]->IsGatewayNodeOrNot() == GatewayNode
 									&& nodes[neighbors[i]]->GetNeighbors()[x] != id){
-									//µ±Ç°½ÚµãµÄÁ½¸ögatewayÁÚ¾Ó½ÚµãÍ¨¹ıÁíÍâÒ»¸öÁÚ¾Ó½ÚµãÏàÁ¬
-									//²¢ÇÒÆäÄÜÁ¿Òª¸ßÒ»µã£¬»òÕßÆäËû±È½Ï·½Ê½
+									//å½“å‰èŠ‚ç‚¹çš„ä¸¤ä¸ªgatewayé‚»å±…èŠ‚ç‚¹é€šè¿‡å¦å¤–ä¸€ä¸ªé‚»å±…èŠ‚ç‚¹ç›¸è¿
+									//å¹¶ä¸”å…¶èƒ½é‡è¦é«˜ä¸€ç‚¹ï¼Œæˆ–è€…å…¶ä»–æ¯”è¾ƒæ–¹å¼
 										Rule1(id, nodes[neighbors[i]]->GetNeighbors()[x]);
 										if(currentState == NonGatewayNode){
-											currentState = GatewayNode;//Ö»ÊÇÆäÖĞÁ½¸ögateway½ÚµãÓĞÏàÁ¬µÄ¶øÒÑ£¬²¢²»ÊÇËùÓĞµÄ
+											currentState = GatewayNode;//åªæ˜¯å…¶ä¸­ä¸¤ä¸ªgatewayèŠ‚ç‚¹æœ‰ç›¸è¿çš„è€Œå·²ï¼Œå¹¶ä¸æ˜¯æ‰€æœ‰çš„
 											break;
 										}
 								}
@@ -443,7 +443,7 @@ void Node::FurtherDecision(const int& time){//½øÒ»²½È·¶¨×Ô¼ºÊÇ²»ÊÇgateway node£¬
 					}
 				}
 			}
-			if(m == neighbors.size()){//µ±Ç°ÁÚ¾ÓµÄÁ½¸öGateway½ÚµãÃ»ÓĞÆäËûGateway½ÚµãÁÚ¾ÓÁË£¬Ö»ÓĞ¸Ã½ÚµãÒ»¸ö£¬Ò²±È½Ï¿ÉÁ¯
+			if(m == neighbors.size()){//å½“å‰é‚»å±…çš„ä¸¤ä¸ªGatewayèŠ‚ç‚¹æ²¡æœ‰å…¶ä»–GatewayèŠ‚ç‚¹é‚»å±…äº†ï¼Œåªæœ‰è¯¥èŠ‚ç‚¹ä¸€ä¸ªï¼Œä¹Ÿæ¯”è¾ƒå¯æ€œ
 				return;
 			}
 		}
@@ -460,7 +460,7 @@ bool Node::ForcedSleep(){
 	//assert(relaxingTime == 0);
 	if(currentState == GatewayNode){
 		
-		//Èç¹ûgateway½Úµã£¬Òªµ¼ÖÂÁÚ¾Ó½ÚµãÖØĞÂÑ¡ÔñÀ²
+		//å¦‚æœgatewayèŠ‚ç‚¹ï¼Œè¦å¯¼è‡´é‚»å±…èŠ‚ç‚¹é‡æ–°é€‰æ‹©å•¦
 		for(size_t i = 0; i < neighbors.size(); ++i){
 			if(nodes[neighbors[i]]->IsGatewayNodeOrNot() == NonGatewayNode){
 				//
@@ -471,7 +471,7 @@ bool Node::ForcedSleep(){
 				
 				if(nodes[neighbors[i]]->routingTable[0].destination != id && nodes[nodes[neighbors[i]]->routingTable[0].destination]->GetNodeWorkState() == Receiving){
 					continue;
-					//Õâ¸öÁÚ¾Ó½Úµã±¾À´¾Í²»ÓÃ×Ô¼ºÀ´×ª·¢½Úµã£¬×Ô¼ºË¯²»Ë¯£¬ÈË¼ÒÒ»µã¶¼²»¹ØĞÄ
+					//è¿™ä¸ªé‚»å±…èŠ‚ç‚¹æœ¬æ¥å°±ä¸ç”¨è‡ªå·±æ¥è½¬å‘èŠ‚ç‚¹ï¼Œè‡ªå·±ç¡ä¸ç¡ï¼Œäººå®¶ä¸€ç‚¹éƒ½ä¸å…³å¿ƒ
 				}
 				double bestGatewayNodeCondition = 0.0;
 				RoutingEntry entry;
@@ -480,7 +480,7 @@ bool Node::ForcedSleep(){
 						&&nodes[ nodes[neighbors[i]]->GetNeighbors()[j]]->GetId() != id
 						&& nodes[nodes[neighbors[i]]->GetNeighbors()[j]]->GetNodeWorkState() == Receiving){
 						if(nodes[nodes[neighbors[i]]->GetNeighbors()[j]]->GetBattery()->GetEnergyGrade() > bestGatewayNodeCondition){
-							bestGatewayNodeCondition = nodes[nodes[neighbors[i]]->GetNeighbors()[j]]->GetBattery()->GetEnergyGrade();//ÔİÊ±¾ÍÏÈÑ¡ÔñÒ»¸ö°É
+							bestGatewayNodeCondition = nodes[nodes[neighbors[i]]->GetNeighbors()[j]]->GetBattery()->GetEnergyGrade();//æš‚æ—¶å°±å…ˆé€‰æ‹©ä¸€ä¸ªå§
 							entry.destination = nodes[neighbors[i]]->GetNeighbors()[j];
 							entry.nextHop = entry.destination;
 							entry.distance = 1;
@@ -492,9 +492,9 @@ bool Node::ForcedSleep(){
 					
 					ofstream outLogFile("log.txt", ios_base::out | ios_base::app);
 					assert(!outLogFile.fail());
-					outLogFile<<__TIME__<<"NonGateway½Úµã"<<neighbors[i]<< "ÔÚÁÚ¾Ó½Úµã"<<id<<" Sleepºó¹ÂÁ¢"<<endl;
+					outLogFile<<__TIME__<<"NonGatewayèŠ‚ç‚¹"<<neighbors[i]<< "åœ¨é‚»å±…èŠ‚ç‚¹"<<id<<" Sleepåå­¤ç«‹"<<endl;
 					outLogFile.close();
-					return false;//ÓĞÒ»¸ö½ÚµãÊÇ²»Á¬Í¨£¬fail to get a dominating set,ÍøÂçÌ±»¾
+					return false;//æœ‰ä¸€ä¸ªèŠ‚ç‚¹æ˜¯ä¸è¿é€šï¼Œfail to get a dominating set,ç½‘ç»œç˜«ç—ª
 				}else{
 					if(routingTable.size()){
 						routingTable[0].destination = entry.destination;
@@ -504,17 +504,17 @@ bool Node::ForcedSleep(){
 					}
 				}
 			}
-			//elseÇé¿öÏÂ£¬¿ÉÄÜ·¢ÉúµÄÇé¿öÊÇ£º
-			//ÁÚ¾ÓµÄgateway½Úµã¿ÉÄÜĞèÒªµ±Ç°½Úµã×ª·¢ÏûÏ¢£¬¿ÉÊÇµ±Ç°½Úµã´¦ÓÚË¯Ãß×´Ì¬£¬²»ÄÜ²ÎÓë×ª·¢,ÆäËûÃ»ÓĞ·Á°­°É
+			//elseæƒ…å†µä¸‹ï¼Œå¯èƒ½å‘ç”Ÿçš„æƒ…å†µæ˜¯ï¼š
+			//é‚»å±…çš„gatewayèŠ‚ç‚¹å¯èƒ½éœ€è¦å½“å‰èŠ‚ç‚¹è½¬å‘æ¶ˆæ¯ï¼Œå¯æ˜¯å½“å‰èŠ‚ç‚¹å¤„äºç¡çœ çŠ¶æ€ï¼Œä¸èƒ½å‚ä¸è½¬å‘,å…¶ä»–æ²¡æœ‰å¦¨ç¢å§
 		}
 	}
-	//elseÇé¿öÏÂ£¬ÔÚÊµ¼ÊµÄÍøÂçÖĞ£¬½ÚµãÔÚË¯Ö®Ç°Í¨ÖªÒ»ÏÂÁÚ¾Ó½Úµã£¬Ê¹µÃÁÚ¾Ó½ÚµãÔÚ½øĞĞ×´Ì¬¾ñÔñµÄÊ±ºò²»Òª°Ñ×Ô¼ºÍü¼ÇÀ²
-	//½ÚµãÔÚsleep½×¶Î´í¹ıµÄÏûÏ¢£¬»áÔÚ½ÚµãĞÑÀ´µÄÊ±ºò£¬ÖØĞÂÊÕ¼¯Ò»ÏÂ
+	//elseæƒ…å†µä¸‹ï¼Œåœ¨å®é™…çš„ç½‘ç»œä¸­ï¼ŒèŠ‚ç‚¹åœ¨ç¡ä¹‹å‰é€šçŸ¥ä¸€ä¸‹é‚»å±…èŠ‚ç‚¹ï¼Œä½¿å¾—é‚»å±…èŠ‚ç‚¹åœ¨è¿›è¡ŒçŠ¶æ€æŠ‰æ‹©çš„æ—¶å€™ä¸è¦æŠŠè‡ªå·±å¿˜è®°å•¦
+	//èŠ‚ç‚¹åœ¨sleepé˜¶æ®µé”™è¿‡çš„æ¶ˆæ¯ï¼Œä¼šåœ¨èŠ‚ç‚¹é†’æ¥çš„æ—¶å€™ï¼Œé‡æ–°æ”¶é›†ä¸€ä¸‹
 	return true;
 }
-void Node::UpdateRoutingTable(){//¸üĞÂÂ·ÓÉ±íºÍdomain nodes
-//¸ù¾İ×Ô¼ºµ±Ç°µÄ×´Ì¬È·¶¨×Ô¼ºµÄrouting table£¬±ØÒªµÄ»° nodes in its domain
-	assert(currentWorkState == Receiving);//ÒòÎªĞèÒªÓëÁÚ¾Ó½ÚµãµÄ½»»»Â·ÓÉ±í
+void Node::UpdateRoutingTable(){//æ›´æ–°è·¯ç”±è¡¨å’Œdomain nodes
+//æ ¹æ®è‡ªå·±å½“å‰çš„çŠ¶æ€ç¡®å®šè‡ªå·±çš„routing tableï¼Œå¿…è¦çš„è¯ nodes in its domain
+	assert(currentWorkState == Receiving);//å› ä¸ºéœ€è¦ä¸é‚»å±…èŠ‚ç‚¹çš„äº¤æ¢è·¯ç”±è¡¨
 	//assert(relaxingTime == 0);
 	if(id == 0){
 		id = 0;
@@ -522,7 +522,7 @@ void Node::UpdateRoutingTable(){//¸üĞÂÂ·ÓÉ±íºÍdomain nodes
 	if(id != 0 && m_Battery->GetEnergyGrade() <= 0){
 		ofstream outLogFile("log.txt", ios_base::out | ios_base::app);
 		assert(!outLogFile.fail());
-		outLogFile<<__TIME__<<"½Úµã"<<id<<"µç³ØºÄ¾¡À²><"<<endl;
+		outLogFile<<__TIME__<<"èŠ‚ç‚¹"<<id<<"ç”µæ± è€—å°½å•¦><"<<endl;
 		outLogFile.close();
 		return;
 	}
@@ -530,8 +530,8 @@ void Node::UpdateRoutingTable(){//¸üĞÂÂ·ÓÉ±íºÍdomain nodes
 	RoutingEntry entry;
 	if(currentState == NonGatewayNode){
 		//has no domain
-		//routing table Ö»ÓĞÒ»Ìõ£¬×Ô¼ºÑ¡ÔñºÃµÄÄÜÁ¿×î¸ßµÄgateway node£¬¿É²»¿ÉÒÔ¶àÑ¡Ôñ¼¸¸ö£¬
-		//ÔÙ¸ù¾İĞİÏ¢Ê±¼äÊ²Ã´µÄÈ·¶¨£¬ÒòÎªÄÜÁ¿Ğ¡µÄÄÇ¸öËµ²»¶¨ÔÙĞİÏ¢¶à¾ÃÒ²²»»áÔÙÔö¼ÓÄÜÁ¿À²£¬¶øÄÜÁ¿¸ßµÄÄÇ¸ö½ÚµãËµ²»¶¨»¹¿ÉÒÔ¼ÌĞøÔö¼ÓÄÜÁ¿
+		//routing table åªæœ‰ä¸€æ¡ï¼Œè‡ªå·±é€‰æ‹©å¥½çš„èƒ½é‡æœ€é«˜çš„gateway nodeï¼Œå¯ä¸å¯ä»¥å¤šé€‰æ‹©å‡ ä¸ªï¼Œ
+		//å†æ ¹æ®ä¼‘æ¯æ—¶é—´ä»€ä¹ˆçš„ç¡®å®šï¼Œå› ä¸ºèƒ½é‡å°çš„é‚£ä¸ªè¯´ä¸å®šå†ä¼‘æ¯å¤šä¹…ä¹Ÿä¸ä¼šå†å¢åŠ èƒ½é‡å•¦ï¼Œè€Œèƒ½é‡é«˜çš„é‚£ä¸ªèŠ‚ç‚¹è¯´ä¸å®šè¿˜å¯ä»¥ç»§ç»­å¢åŠ èƒ½é‡
 		double bestGatewayNodeCondition = 0.0;
 		if(routingTable.size()){
 			bestGatewayNodeCondition = nodes[routingTable[0].nextHop]->GetBattery()->GetEnergyGrade();
@@ -540,7 +540,7 @@ void Node::UpdateRoutingTable(){//¸üĞÂÂ·ÓÉ±íºÍdomain nodes
 			if(nodes[neighbors[i]]->IsGatewayNodeOrNot() == GatewayNode 
 				&& nodes[neighbors[i]]->GetNodeWorkState() == Receiving){
 				if(nodes[neighbors[i]]->GetBattery()->GetEnergyGrade() > bestGatewayNodeCondition){
-					bestGatewayNodeCondition = nodes[neighbors[i]]->GetBattery()->GetEnergyGrade();//ÔİÊ±¾ÍÏÈÑ¡ÔñÒ»¸ö°É
+					bestGatewayNodeCondition = nodes[neighbors[i]]->GetBattery()->GetEnergyGrade();//æš‚æ—¶å°±å…ˆé€‰æ‹©ä¸€ä¸ªå§
 					entry.destination = neighbors[i];
 					entry.nextHop = entry.destination;
 					entry.distance = 1;
@@ -551,9 +551,9 @@ void Node::UpdateRoutingTable(){//¸üĞÂÂ·ÓÉ±íºÍdomain nodes
 		if(bestGatewayNodeCondition == double(0)){
 			ofstream outLogFile("log.txt", ios_base::out | ios_base::app);
 			assert(!outLogFile.fail());
-			outLogFile<<__TIME__<<"NonGateway½Úµã"<<id<< "¹ÂÁ¢"<<endl;
+			outLogFile<<__TIME__<<"NonGatewayèŠ‚ç‚¹"<<id<< "å­¤ç«‹"<<endl;
 			outLogFile.close();
-			return;//ÓĞÒ»¸ö½ÚµãÊÇ²»Á¬Í¨£¬fail to get a dominating set,ÍøÂçÌ±»¾
+			return;//æœ‰ä¸€ä¸ªèŠ‚ç‚¹æ˜¯ä¸è¿é€šï¼Œfail to get a dominating set,ç½‘ç»œç˜«ç—ª
 		}else{
 			if(routingTable.size()){
 				if(bestGatewayNodeCondition != nodes[routingTable[0].nextHop]->GetBattery()->GetEnergyGrade()){
@@ -565,12 +565,12 @@ void Node::UpdateRoutingTable(){//¸üĞÂÂ·ÓÉ±íºÍdomain nodes
 			}
 		}
 		
-	}else{//Gateway½Úµã
+	}else{//GatewayèŠ‚ç‚¹
 		for(size_t i = 0; i < neighbors.size(); ++i){
 			if(nodes[neighbors[i]]->IsGatewayNodeOrNot() == GatewayNode){
 				size_t j = 0;
 				for(; j < routingTable.size(); ++j){
-					if(neighbors[i] == routingTable[j].nextHop){//ÒÑ¾­´æÔÚ
+					if(neighbors[i] == routingTable[j].nextHop){//å·²ç»å­˜åœ¨
 						break;
 					}
 				}
@@ -583,7 +583,7 @@ void Node::UpdateRoutingTable(){//¸üĞÂÂ·ÓÉ±íºÍdomain nodes
 			}else{
 				size_t m = 0;
 				for(; m < domainMembers.size(); ++m){
-					if(i == domainMembers[m]){//ÒÑ¾­´æÔÚ
+					if(i == domainMembers[m]){//å·²ç»å­˜åœ¨
 						break;
 					}
 				}
@@ -596,10 +596,10 @@ void Node::UpdateRoutingTable(){//¸üĞÂÂ·ÓÉ±íºÍdomain nodes
 		if(!routingTable.size()){
 			ofstream outLogFile("log.txt", ios_base::out | ios_base::app);
 			assert(!outLogFile.fail());
-			outLogFile<<__TIME__<<"Gateway½Úµã"<<id<< "¹ÂÁ¢"<<endl;
+			outLogFile<<__TIME__<<"GatewayèŠ‚ç‚¹"<<id<< "å­¤ç«‹"<<endl;
 			outLogFile.close();
 		}
-		//¸ù¾İÁÚ¾Ó½ÚµãµÄrouting tableÔÙ¸üĞÂÒ»ÏÂ
+		//æ ¹æ®é‚»å±…èŠ‚ç‚¹çš„routing tableå†æ›´æ–°ä¸€ä¸‹
 		for(size_t i = 0; i < neighbors.size(); ++i){
 			if(nodes[neighbors[i]]->IsGatewayNodeOrNot() == GatewayNode){
 				for(size_t j = 0; j < nodes[neighbors[i]]->routingTable.size(); ++j){
@@ -621,17 +621,17 @@ void Node::UpdateRoutingTable(){//¸üĞÂÂ·ÓÉ±íºÍdomain nodes
 		}
 	}
 }
-void Node::PacketGenerating(int time){//½ÚµãÊÇ·ñ²úÉúÊı¾İ°ü£¬ÒÔ¼°ÄÜÁ¿ÏûºÄ
+void Node::PacketGenerating(int time){//èŠ‚ç‚¹æ˜¯å¦äº§ç”Ÿæ•°æ®åŒ…ï¼Œä»¥åŠèƒ½é‡æ¶ˆè€—
 	if(m_Battery->GetEnergyGrade() <= 0){
 		ofstream outLogFile("log.txt", ios_base::out | ios_base::app);
 		assert(!outLogFile.fail());
-		outLogFile<<__TIME__<<"½Úµã"<<id<<"µç³ØºÄ¾¡À²><"<<endl;
+		outLogFile<<__TIME__<<"èŠ‚ç‚¹"<<id<<"ç”µæ± è€—å°½å•¦><"<<endl;
 		outLogFile.close();
 		return;
 	}
 	double pos = (double) (rand() + 1) / (double)RAND_MAX;
-	if(time % SENSE_DURATION == 1){//ÒòÎªÊÇ´ÓµÚÒ»Ãë¿ªÊ¼¼ÆËãµÄÃ´
-		if(pos <= POSIBILITY_PACKET_GENERATING){//²úÉúÊı¾İ°ü
+	if(time % SENSE_DURATION == 1){//å› ä¸ºæ˜¯ä»ç¬¬ä¸€ç§’å¼€å§‹è®¡ç®—çš„ä¹ˆ
+		if(pos <= POSIBILITY_PACKET_GENERATING){//äº§ç”Ÿæ•°æ®åŒ…
 			bufferedPackets.push(Packet(id, MAX_TIME));
 		}
 		if(currentWorkState == Sleeping){
@@ -665,14 +665,14 @@ void Node::RoutingWithBufferedPackets(){
 	if(currentWorkState == Sleeping){
 		ofstream outLogFile("log.txt", ios_base::out | ios_base::app);
 		assert(!outLogFile.fail());
-		outLogFile<<__TIME__<<"½Úµã"<<id<<"´¦ÓÚË¯Ãß×´Ì¬ÔõÃ´ÄÜÂ·ÓÉÄØ,Ò»¶¨ÊÇÄÄÀïÅª´íÁË><"<<endl;
+		outLogFile<<__TIME__<<"èŠ‚ç‚¹"<<id<<"å¤„äºç¡çœ çŠ¶æ€æ€ä¹ˆèƒ½è·¯ç”±å‘¢,ä¸€å®šæ˜¯å“ªé‡Œå¼„é”™äº†><"<<endl;
 		outLogFile.close();
 		return;
 	}
 	if(m_Battery->GetEnergyGrade() <= 0){
 		ofstream outLogFile("log.txt", ios_base::out | ios_base::app);
 		assert(!outLogFile.fail());
-		outLogFile<<__TIME__<<"½Úµã"<<id<<"µç³Ø¶¼ºÄ¾¡À²£¬»¹Â·ÓÉÊ²Ã´°¡><"<<endl;
+		outLogFile<<__TIME__<<"èŠ‚ç‚¹"<<id<<"ç”µæ± éƒ½è€—å°½å•¦ï¼Œè¿˜è·¯ç”±ä»€ä¹ˆå•Š><"<<endl;
 		outLogFile.close();
 		return;
 	}
@@ -694,7 +694,7 @@ void Node::RoutingWithBufferedPackets(){
 					if(nodes[neighbors[i]]->IsGatewayNodeOrNot() == GatewayNode 
 						&& nodes[neighbors[i]]->GetNodeWorkState() == Receiving){
 						if(nodes[neighbors[i]]->GetBattery()->GetEnergyGrade() > bestGatewayNodeCondition){
-							bestGatewayNodeCondition = nodes[neighbors[i]]->GetBattery()->GetEnergyGrade();//ÔİÊ±¾ÍÏÈÑ¡ÔñÒ»¸ö°É
+							bestGatewayNodeCondition = nodes[neighbors[i]]->GetBattery()->GetEnergyGrade();//æš‚æ—¶å°±å…ˆé€‰æ‹©ä¸€ä¸ªå§
 							entry.destination = neighbors[i];
 							entry.nextHop = entry.destination;
 							entry.distance = 1;
@@ -705,9 +705,9 @@ void Node::RoutingWithBufferedPackets(){
 				if(bestGatewayNodeCondition == double(0)){
 					ofstream outLogFile("log.txt", ios_base::out | ios_base::app);
 					assert(!outLogFile.fail());
-					outLogFile<<__TIME__<<"NonGateway½Úµã"<<id<< "¹ÂÁ¢,ÎŞ·¨Â·ÓÉÀ²"<<endl;
+					outLogFile<<__TIME__<<"NonGatewayèŠ‚ç‚¹"<<id<< "å­¤ç«‹,æ— æ³•è·¯ç”±å•¦"<<endl;
 					outLogFile.close();
-					return;//ÓĞÒ»¸ö½ÚµãÊÇ²»Á¬Í¨£¬fail to get a dominating set,ÍøÂçÌ±»¾
+					return;//æœ‰ä¸€ä¸ªèŠ‚ç‚¹æ˜¯ä¸è¿é€šï¼Œfail to get a dominating set,ç½‘ç»œç˜«ç—ª
 				}else{
 					if(routingTable.size()){
 						routingTable[0].destination = entry.destination;
@@ -726,12 +726,12 @@ void Node::RoutingWithBufferedPackets(){
 		size_t d = 0;
 		size_t j = 0;
 		for(d = 0; d < domainMembers.size(); ++d){
-			if(domainMembers[d] == 0){//Ôİ¶¨sink½ÚµãIdÎª0£¬0½ÚµãÒ»Ö±¶¼ÊÇĞÑ×ÅµÄ°¡°¡°¡
+			if(domainMembers[d] == 0){//æš‚å®šsinkèŠ‚ç‚¹Idä¸º0ï¼Œ0èŠ‚ç‚¹ä¸€ç›´éƒ½æ˜¯é†’ç€çš„å•Šå•Šå•Š
 				assert(bufferedPackets.size());
 				nodes[0]->PushPackets(bufferedPackets.front());
 				
 				bufferedPackets.pop();
-				//ÕÒµ½¸Ãsink½Úµã
+				//æ‰¾åˆ°è¯¥sinkèŠ‚ç‚¹
 				//nodes[currentNode->domainMembers[i]]->AddEnergy( -(SEND_PACKET_ENERGY + RECEIVE_PACKET_ENERGY));
 				//nodes[0]->AddEnergy( -(RECEIVE_PACKET_ENERGY));
 				break;
@@ -743,7 +743,7 @@ void Node::RoutingWithBufferedPackets(){
 				j = 0;
 				for(; j < nodes[routingTable[i].destination]->GetDomainMembers().size()
 					&& nodes[routingTable[i].nextHop]->GetNodeWorkState() == Receiving; ++j){
-					if(nodes[routingTable[i].destination]->GetDomainMembers()[j] == 0){//Ôİ¶¨sink½ÚµãIdÎª0
+					if(nodes[routingTable[i].destination]->GetDomainMembers()[j] == 0){//æš‚å®šsinkèŠ‚ç‚¹Idä¸º0
 						assert(bufferedPackets.size());
 						nodes[routingTable[i].nextHop]->PushPackets(bufferedPackets.front());
 						
@@ -755,14 +755,14 @@ void Node::RoutingWithBufferedPackets(){
 					break;
 				}	
 			}
-			if(i == routingTable.size()){//Ã»ÓĞÏÖ³ÉµÄÂ·ÓÉ£¬Ö»ÓĞ¹ã²¥À²À²
+			if(i == routingTable.size()){//æ²¡æœ‰ç°æˆçš„è·¯ç”±ï¼Œåªæœ‰å¹¿æ’­å•¦å•¦
 				/*if(currentState == NonGatewayNode){
 					double bestGatewayNodeCondition = 0.0;
 					RoutingEntry entry;
 					for(size_t i = 0; i < neighbors.size(); ++i){
 						if(nodes[neighbors[i]]->IsGatewayNodeOrNot() == GatewayNode && nodes[neighbors[i]]->GetNodeWorkState() == Receiving){
 							if(nodes[neighbors[i]]->GetBattery()->GetEnergyGrade() > bestGatewayNodeCondition){
-								bestGatewayNodeCondition = nodes[neighbors[i]]->GetBattery()->GetEnergyGrade();//ÔİÊ±¾ÍÏÈÑ¡ÔñÒ»¸ö°É
+								bestGatewayNodeCondition = nodes[neighbors[i]]->GetBattery()->GetEnergyGrade();//æš‚æ—¶å°±å…ˆé€‰æ‹©ä¸€ä¸ªå§
 								entry.destination = neighbors[i];
 								entry.nextHop = entry.destination;
 								entry.distance = 1;
@@ -773,9 +773,9 @@ void Node::RoutingWithBufferedPackets(){
 					if(bestGatewayNodeCondition == double(0)){
 						ofstream outLogFile("log.txt", ios_base::out | ios_base::app);
 						assert(!outLogFile.fail());
-						outLogFile<<__TIME__<<"NonGateway½Úµã"<<id<< "¹ÂÁ¢"<<endl;
+						outLogFile<<__TIME__<<"NonGatewayèŠ‚ç‚¹"<<id<< "å­¤ç«‹"<<endl;
 						outLogFile.close();
-						return;//ÓĞÒ»¸ö½ÚµãÊÇ²»Á¬Í¨£¬fail to get a dominating set,ÍøÂçÌ±»¾
+						return;//æœ‰ä¸€ä¸ªèŠ‚ç‚¹æ˜¯ä¸è¿é€šï¼Œfail to get a dominating set,ç½‘ç»œç˜«ç—ª
 					}else{
 						if(routingTable.size()){
 							routingTable[0].destination = entry.destination;
@@ -790,7 +790,7 @@ void Node::RoutingWithBufferedPackets(){
 					bool isOut = false;
 					for(size_t m = 0; m < routingTable.size() 
 						&& nodes[routingTable[m].nextHop]->GetNodeWorkState() == Receiving; ++m){
-						if(routingTable[m].distance == 1){//µ±È»Ö»¹ã²¥Ò»ÌøµÄÁÚ¾ÓÀ²
+						if(routingTable[m].distance == 1){//å½“ç„¶åªå¹¿æ’­ä¸€è·³çš„é‚»å±…å•¦
 							
 							assert(bufferedPackets.size());
 							
@@ -808,18 +808,18 @@ void Node::RoutingWithBufferedPackets(){
 	}
 	
 }
-void Node::Routing(){//Â·ÓÉ£¬È·¶¨Êı¾İ°üÔÚÂ·ÓÉ½×¶Î¾­¹ıÄÄĞ©½Úµã£¬ÏàÓ¦½Úµã¾ÍĞèÒªÄÜÁ¿¼õÉÙ
+void Node::Routing(){//è·¯ç”±ï¼Œç¡®å®šæ•°æ®åŒ…åœ¨è·¯ç”±é˜¶æ®µç»è¿‡å“ªäº›èŠ‚ç‚¹ï¼Œç›¸åº”èŠ‚ç‚¹å°±éœ€è¦èƒ½é‡å‡å°‘
 	if(currentWorkState == Sleeping){
 		ofstream outLogFile("log.txt", ios_base::out | ios_base::app);
 		assert(!outLogFile.fail());
-		outLogFile<<__TIME__<<"½Úµã"<<id<<"´¦ÓÚË¯Ãß×´Ì¬ÔõÃ´ÄÜÂ·ÓÉÄØ><"<<endl;
+		outLogFile<<__TIME__<<"èŠ‚ç‚¹"<<id<<"å¤„äºç¡çœ çŠ¶æ€æ€ä¹ˆèƒ½è·¯ç”±å‘¢><"<<endl;
 		outLogFile.close();
 		return;
 	}
 	if(m_Battery->GetEnergyGrade() <= 0){
 		ofstream outLogFile("log.txt", ios_base::out | ios_base::app);
 		assert(!outLogFile.fail());
-		outLogFile<<__TIME__<<"½Úµã"<<id<<"µç³ØºÄ¾¡À²><"<<endl;
+		outLogFile<<__TIME__<<"èŠ‚ç‚¹"<<id<<"ç”µæ± è€—å°½å•¦><"<<endl;
 		outLogFile.close();
 		return;
 	}
@@ -831,7 +831,7 @@ void Node::Routing(){//Â·ÓÉ£¬È·¶¨Êı¾İ°üÔÚÂ·ÓÉ½×¶Î¾­¹ıÄÄĞ©½Úµã£¬ÏàÓ¦½Úµã¾ÍĞèÒªÄÜÁ
 			//TTL expired
 			ofstream outLogFile("log.txt", ios_base::out | ios_base::app);
 			assert(!outLogFile.fail());
-			outLogFile<<__TIME__<<"Êı¾İ°üTTL¹ıÆÚ"<<id<<endl;
+			outLogFile<<__TIME__<<"æ•°æ®åŒ…TTLè¿‡æœŸ"<<id<<endl;
 			outLogFile.close();
 			return;
 		}
@@ -841,8 +841,8 @@ void Node::Routing(){//Â·ÓÉ£¬È·¶¨Êı¾İ°üÔÚÂ·ÓÉ½×¶Î¾­¹ıÄÄĞ©½Úµã£¬ÏàÓ¦½Úµã¾ÍĞèÒªÄÜÁ
 		size_t i = 0;
 		size_t j = 0;
 		for(i = 0; i < currentNode->domainMembers.size(); ++i){
-			if(currentNode->GetDomainMembers()[i] == 0){//Ôİ¶¨sink½ÚµãIdÎª0
-				//ÕÒµ½¸Ãsink½Úµã
+			if(currentNode->GetDomainMembers()[i] == 0){//æš‚å®šsinkèŠ‚ç‚¹Idä¸º0
+				//æ‰¾åˆ°è¯¥sinkèŠ‚ç‚¹
 				//nodes[currentNode->domainMembers[i]]->AddEnergy( -(SEND_PACKET_ENERGY + RECEIVE_PACKET_ENERGY));
 				nodes[0]->AddEnergy( -(RECEIVE_PACKET_ENERGY));
 				break;
@@ -852,8 +852,8 @@ void Node::Routing(){//Â·ÓÉ£¬È·¶¨Êı¾İ°üÔÚÂ·ÓÉ½×¶Î¾­¹ıÄÄĞ©½Úµã£¬ÏàÓ¦½Úµã¾ÍĞèÒªÄÜÁ
 			for(i = 0; i < currentNode->routingTable.size(); ++i){
 				j = 0;
 				for(; j < nodes[currentNode->routingTable[i].destination]->GetDomainMembers().size(); ++j){
-					if(nodes[currentNode->routingTable[i].destination]->GetDomainMembers()[j] == 0){//Ôİ¶¨sink½ÚµãIdÎª0
-						//ÕÒµ½¸Ãsink½Úµã
+					if(nodes[currentNode->routingTable[i].destination]->GetDomainMembers()[j] == 0){//æš‚å®šsinkèŠ‚ç‚¹Idä¸º0
+						//æ‰¾åˆ°è¯¥sinkèŠ‚ç‚¹
 						if(currentNode->routingTable[i].destination == currentNode->routingTable[i].nextHop){
 							nodes[currentNode->routingTable[i].destination]->AddEnergy( -(SEND_PACKET_ENERGY + RECEIVE_PACKET_ENERGY));
 							nodes[0]->AddEnergy( -(RECEIVE_PACKET_ENERGY));
@@ -869,9 +869,9 @@ void Node::Routing(){//Â·ÓÉ£¬È·¶¨Êı¾İ°üÔÚÂ·ÓÉ½×¶Î¾­¹ıÄÄĞ©½Úµã£¬ÏàÓ¦½Úµã¾ÍĞèÒªÄÜÁ
 					break;
 				}	
 			}
-			if(i == currentNode->routingTable.size()){//Ã»ÓĞÏÖ³ÉµÄÂ·ÓÉ£¬Ö»ÓĞ¹ã²¥À²À²
+			if(i == currentNode->routingTable.size()){//æ²¡æœ‰ç°æˆçš„è·¯ç”±ï¼Œåªæœ‰å¹¿æ’­å•¦å•¦
 				for(size_t m = 0; m < currentNode->routingTable.size(); ++m){
-					if(currentNode->routingTable[m].distance == 1){//µ±È»Ö»¹ã²¥Ò»ÌøµÄÁÚ¾ÓÀ²
+					if(currentNode->routingTable[m].distance == 1){//å½“ç„¶åªå¹¿æ’­ä¸€è·³çš„é‚»å±…å•¦
 						allNodesOfForwardedPacket.push(currentNode->routingTable[m].destination);
 						nodes[currentNode->routingTable[m].destination]->AddEnergy( -(SEND_PACKET_ENERGY + RECEIVE_PACKET_ENERGY));
 					}
@@ -886,30 +886,30 @@ void Node::Routing(){//Â·ÓÉ£¬È·¶¨Êı¾İ°üÔÚÂ·ÓÉ½×¶Î¾­¹ıÄÄĞ©½Úµã£¬ÏàÓ¦½Úµã¾ÍĞèÒªÄÜÁ
 		}
 	}
 }
-void Node::AddEnergy(double energy){//ÄÜÁ¿µÄ¼Ó¼õ
+void Node::AddEnergy(double energy){//èƒ½é‡çš„åŠ å‡
 	//this->energyStatus += energy;
 	/*if(this->energyStatus <= 0){
-		cout<<"½Úµã"<<this->id<<"µç³ØºÄ¾¡À²><"<<endl;
+		cout<<"èŠ‚ç‚¹"<<this->id<<"ç”µæ± è€—å°½å•¦><"<<endl;
 		return;
 	}*/
 }
 
-void Node::AddTime(){//Ôö¼Ó¾àÀëÉÏ´Î×÷Îªgateway node¹¤×÷µÄĞİÏ¢Ê±¼ä£¬
+void Node::AddTime(){//å¢åŠ è·ç¦»ä¸Šæ¬¡ä½œä¸ºgateway nodeå·¥ä½œçš„ä¼‘æ¯æ—¶é—´ï¼Œ
 	if(id == 0){
 		workingTime++;
 		totalWorkTime++;
-		return;//×÷Îªsink½Úµã£¬ÒªÒ»Ö±¹¤×÷
+		return;//ä½œä¸ºsinkèŠ‚ç‚¹ï¼Œè¦ä¸€ç›´å·¥ä½œ
 	}
 	switch(currentWorkState){
 	case Receiving:
 		workingTime++;
 		totalWorkTime++;
 		if(currentState == NonGatewayNode && workingTime >= MAX_WORK_TIME){
-			//µ¼ÖÂÆäËûµÄÁÚ¾Ó
+			//å¯¼è‡´å…¶ä»–çš„é‚»å±…
 			/*if(ForcedSleep()){
 				currentWorkState = Sleeping;
 				currentState = WhoKnows;
-				//ÔÚË¯×ÅÖ®Ç°¸øËùÓĞµÄÁÚ¾Ó½Úµã·¢ËÍĞÅÏ¢¡£
+				//åœ¨ç¡ç€ä¹‹å‰ç»™æ‰€æœ‰çš„é‚»å±…èŠ‚ç‚¹å‘é€ä¿¡æ¯ã€‚
 			
 				relaxingTime = 0;
 				workingTime = 0;
@@ -917,7 +917,7 @@ void Node::AddTime(){//Ôö¼Ó¾àÀëÉÏ´Î×÷Îªgateway node¹¤×÷µÄĞİÏ¢Ê±¼ä£¬
 			*/
 			currentWorkState = Sleeping;
 			currentState = WhoKnows;
-			//ÔÚË¯×ÅÖ®Ç°¸øËùÓĞµÄÁÚ¾Ó½Úµã·¢ËÍĞÅÏ¢¡£
+			//åœ¨ç¡ç€ä¹‹å‰ç»™æ‰€æœ‰çš„é‚»å±…èŠ‚ç‚¹å‘é€ä¿¡æ¯ã€‚
 			
 			relaxingTime = 0;
 			workingTime = 0;
@@ -927,7 +927,7 @@ void Node::AddTime(){//Ôö¼Ó¾àÀëÉÏ´Î×÷Îªgateway node¹¤×÷µÄĞİÏ¢Ê±¼ä£¬
 	case Sleeping:
 		relaxingTime++;
 		if(relaxingTime >= THRESHOLD){
-			//È·¶¨Ğè²»ĞèÒªĞÑ¹ı¹ıÀ´
+			//ç¡®å®šéœ€ä¸éœ€è¦é†’è¿‡è¿‡æ¥
 			relaxingTime = 0;
 			workingTime = 0;
 			currentWorkState = Receiving;
@@ -941,48 +941,48 @@ void Node::AddTime(){//Ôö¼Ó¾àÀëÉÏ´Î×÷Îªgateway node¹¤×÷µÄĞİÏ¢Ê±¼ä£¬
 		outLogFile.close();
 	}
 }
-void Node::MovementSimulation(){//È·¶¨×Ô¼ºÊÇ·ñÒÆ¶¯£¬²»ÒÆ¶¯·µ»Øfalse£¬ÒÆ¶¯µÄ»°ÖØÖÃÏà¹ØĞÅÏ¢
-	//¿ÉÒÔÍ¨¹ı´ÓÎÄ¼şÖĞ¶ÁÈ¡Î»ÖÃĞÅÏ¢
+void Node::MovementSimulation(){//ç¡®å®šè‡ªå·±æ˜¯å¦ç§»åŠ¨ï¼Œä¸ç§»åŠ¨è¿”å›falseï¼Œç§»åŠ¨çš„è¯é‡ç½®ç›¸å…³ä¿¡æ¯
+	//å¯ä»¥é€šè¿‡ä»æ–‡ä»¶ä¸­è¯»å–ä½ç½®ä¿¡æ¯
 	double movePos = (double) (rand() + 1) / (double)RAND_MAX;
 	double x = 0.0, y = 0.0;
-	if(movePos <= POSIBILITY_MOVEMENT){//ÒÆ¶¯
+	if(movePos <= POSIBILITY_MOVEMENT){//ç§»åŠ¨
 		x = DISTANCE_MOVEMENT * cos( 2 * PI * (double)(rand() + 1) / (double)(RAND_MAX)) * (double)(rand() + 1) / (double)(RAND_MAX);
 		y = DISTANCE_MOVEMENT * sin( 2 * PI * (double)(rand() + 1) / (double)(RAND_MAX)) * (double)(rand() + 1) / (double)(RAND_MAX);
 		xLoc = xLoc + x > 0?xLoc + x:xLoc;
 		yLoc = yLoc + y > 0?yLoc + y:yLoc;
 		if(currentWorkState == Receiving){
-			WakeupAfterSleep();//Ö»ÓĞactiveµÄ½Úµã²Å»áÍ¨ÖªÁÚ¾ÓÎÒÒÆ¶¯À²£¬Èç¹ûµ±Ç°Ö»ÊÇË¯×Å£¬¾Í²»¿ÉÄÜÍ¨ÖªÀ²
+			WakeupAfterSleep();//åªæœ‰activeçš„èŠ‚ç‚¹æ‰ä¼šé€šçŸ¥é‚»å±…æˆ‘ç§»åŠ¨å•¦ï¼Œå¦‚æœå½“å‰åªæ˜¯ç¡ç€ï¼Œå°±ä¸å¯èƒ½é€šçŸ¥å•¦
 		}
 	}
 	
 }
 void Node::WakeupAfterSleep(){
-	//Ïà¹ØĞÅÏ¢ĞŞ¸Ä
-		//ÒÆ¶¯µ¼ÖÂ¾ÉÁÚ¾ÓÒ²ĞèÒª¸üĞÂ
+	//ç›¸å…³ä¿¡æ¯ä¿®æ”¹
+		//ç§»åŠ¨å¯¼è‡´æ—§é‚»å±…ä¹Ÿéœ€è¦æ›´æ–°
 		for(vector<int>::iterator first = neighbors.begin(); first != neighbors.end(); ++first){
-			if(DIS(xLoc, yLoc, nodes[*first]->GetXLoc(), nodes[*first]->GetYLoc()) >= nodes[*first]->GetTransDis()){//µ¼ÖÂ¾ÉÁÚ¾ÓÒÑ¾­²»»áÔÙÊÇ×Ô¼ºµÄÁÚ¾ÓÀ²><
-				//´Ó¾ÉÁÚ¾ÓµÄÁÚ¾Ó±íÖĞÉ¾³ı×Ô¼º
-				//ÕâĞ©ÁÚ¾ÓĞèÒªÖØĞÂ¼ÆËã×Ô¼ºµÄÊÇ²»ÊÇdominating setÀ²
-				//¹¤×÷µÄÁÚ¾ÓÖªµÀÁËµ±Ç°½ÚµãÒÆ¶¯µÄÏûÏ¢
-				//ÄÇĞ©Ë¯×ÅµÄ½ÚµãÔõÃ´°ì£¬oh£¬ÎÒÖªµÀ£¬ÔÚËüÃÇĞÑ¹ıÀ´µÄÊ±ºò£¬×Ô¼º¹ã²¥Ò»ÌõÏûÏ¢£¬ÖØĞÂ»ñµÃÒ»ÏÂ×Ô¼ºµÄÁÚ¾Ó
+			if(DIS(xLoc, yLoc, nodes[*first]->GetXLoc(), nodes[*first]->GetYLoc()) >= nodes[*first]->GetTransDis()){//å¯¼è‡´æ—§é‚»å±…å·²ç»ä¸ä¼šå†æ˜¯è‡ªå·±çš„é‚»å±…å•¦><
+				//ä»æ—§é‚»å±…çš„é‚»å±…è¡¨ä¸­åˆ é™¤è‡ªå·±
+				//è¿™äº›é‚»å±…éœ€è¦é‡æ–°è®¡ç®—è‡ªå·±çš„æ˜¯ä¸æ˜¯dominating setå•¦
+				//å·¥ä½œçš„é‚»å±…çŸ¥é“äº†å½“å‰èŠ‚ç‚¹ç§»åŠ¨çš„æ¶ˆæ¯
+				//é‚£äº›ç¡ç€çš„èŠ‚ç‚¹æ€ä¹ˆåŠï¼Œohï¼Œæˆ‘çŸ¥é“ï¼Œåœ¨å®ƒä»¬é†’è¿‡æ¥çš„æ—¶å€™ï¼Œè‡ªå·±å¹¿æ’­ä¸€æ¡æ¶ˆæ¯ï¼Œé‡æ–°è·å¾—ä¸€ä¸‹è‡ªå·±çš„é‚»å±…
 				
 				nodes[*first]->DeleteNeighborAndUpdateRoutingTable(id);
 			}
 			if(DIS(xLoc, yLoc, nodes[*first]->GetXLoc(), nodes[*first]->GetYLoc()) >= transDis){
-				//¿ÉÒÔÊµÏÖÍ¨ĞÅ¾àÀëµÄ²»¶Ô³Æ
+				//å¯ä»¥å®ç°é€šä¿¡è·ç¦»çš„ä¸å¯¹ç§°
 				
 				neighbors.erase(first);
 				break;
 				
 			}
 		}
-		//»ñµÃĞÂÁÚ¾ÓÒÔ¼°ĞÂÁÚ¾Ó¸üĞÂ
+		//è·å¾—æ–°é‚»å±…ä»¥åŠæ–°é‚»å±…æ›´æ–°
 		for(int i = 0; i < NODE_NUMBER  && nodes[i]->GetNodeWorkState() == Receiving; ++i){
 			if(id == i){
 				continue;
 			}
 			if(DIS(xLoc, yLoc, nodes[i]->GetXLoc(), nodes[i]->GetYLoc()) < transDis){
-				//¿ÉÒÔÊµÏÖÍ¨ĞÅ¾àÀëµÄ²»¶Ô³Æ
+				//å¯ä»¥å®ç°é€šä¿¡è·ç¦»çš„ä¸å¯¹ç§°
 				vector<int>::iterator first = neighbors.begin();
 				for(; first != neighbors.end(); ++first){
 					if(i == *first){
@@ -994,11 +994,11 @@ void Node::WakeupAfterSleep(){
 				}
 			}
 			if(DIS(xLoc, yLoc, nodes[i]->GetXLoc(), nodes[i]->GetYLoc()) < nodes[i]->transDis){
-				//¿ÉÒÔÊµÏÖÍ¨ĞÅ¾àÀëµÄ²»¶Ô³Æ	
+				//å¯ä»¥å®ç°é€šä¿¡è·ç¦»çš„ä¸å¯¹ç§°	
 				nodes[i]->AddNeighborAndUpdateRoutingTable(id);
 			}
 		}
-		//µ±Ç°½ÚµãÖØĞÂ¼ÆËã×Ô¼ºÊÇ·ñÊÇgateway½Úµã
+		//å½“å‰èŠ‚ç‚¹é‡æ–°è®¡ç®—è‡ªå·±æ˜¯å¦æ˜¯gatewayèŠ‚ç‚¹
 		MakeSureIsGatewayNodeOrNot();
 		if(currentState == GatewayNode){
 			FurtherDecision(-1);
@@ -1016,7 +1016,7 @@ void Node::AddNeighbors(int n){
 	}
 	neighbors.push_back(n);
 }
-void Node::AddNeighborAndUpdateRoutingTable(int n){//Ìí¼ÓÒ»¸öÁÚ¾Ó,²¢¸üĞÂÂ·ÓÉ
+void Node::AddNeighborAndUpdateRoutingTable(int n){//æ·»åŠ ä¸€ä¸ªé‚»å±…,å¹¶æ›´æ–°è·¯ç”±
 	if(id == 7){
 		id = 7;
 	}
@@ -1026,7 +1026,7 @@ void Node::AddNeighborAndUpdateRoutingTable(int n){//Ìí¼ÓÒ»¸öÁÚ¾Ó,²¢¸üĞÂÂ·ÓÉ
 		}
 	}
 	neighbors.push_back(n);
-	if(currentState == NonGatewayNode){//ĞÂÌíµÄÁÚ¾Ó£¬ÎŞÂÛÊÇÒÆ¶¯¹ıÀ´µÄ»¹ÊÇĞÑ¹ıÀ´µÄ£¬µ±Ç°½Úµã¶¼ĞèÒªÅĞ¶Ï×Ô¼ºµÄ×´Ì¬
+	if(currentState == NonGatewayNode){//æ–°æ·»çš„é‚»å±…ï¼Œæ— è®ºæ˜¯ç§»åŠ¨è¿‡æ¥çš„è¿˜æ˜¯é†’è¿‡æ¥çš„ï¼Œå½“å‰èŠ‚ç‚¹éƒ½éœ€è¦åˆ¤æ–­è‡ªå·±çš„çŠ¶æ€
 		MakeSureIsGatewayNodeOrNot();
 		if(currentState == GatewayNode){
 			FurtherDecision(-1);
@@ -1062,28 +1062,28 @@ void Node::AddNeighborAndUpdateRoutingTable(int n){//Ìí¼ÓÒ»¸öÁÚ¾Ó,²¢¸üĞÂÂ·ÓÉ
 		}
 	}
 }
-int Node::GetId(){//»ñµÃ½ÚµãId
+int Node::GetId(){//è·å¾—èŠ‚ç‚¹Id
 	return this->id;
 }
-double Node::GetXLoc(){//»ñµÃx×ø±êÖá
+double Node::GetXLoc(){//è·å¾—xåæ ‡è½´
 	return this->xLoc;
 }
-double Node::GetYLoc(){//»ñµÃy×ø±êÖá
+double Node::GetYLoc(){//è·å¾—yåæ ‡è½´
 	return this->yLoc;
 }
-double Node::GetTransDis(){//»ñµÃÍ¨ĞÅ¾àÀë
+double Node::GetTransDis(){//è·å¾—é€šä¿¡è·ç¦»
 	return this->transDis;
 }
-int Node::GetWorkingTime(){//»ñµÃÒÑ¾­¹¤×÷µÄÊ±¼ä
+int Node::GetWorkingTime(){//è·å¾—å·²ç»å·¥ä½œçš„æ—¶é—´
 	return this->workingTime;
 }
-NodeState Node::IsGatewayNodeOrNot(){//»ñµÃ×Ô¼ºÊÇ·ñÊÇgateway node
+NodeState Node::IsGatewayNodeOrNot(){//è·å¾—è‡ªå·±æ˜¯å¦æ˜¯gateway node
 	return this->currentState;
 }
-vector<int> Node::GetNeighbors(){//»ñµÃ×Ô¼ºµÄÁÚ¾Ó½Úµã
+vector<int> Node::GetNeighbors(){//è·å¾—è‡ªå·±çš„é‚»å±…èŠ‚ç‚¹
 	return this->neighbors;
 }
-void Node::DeleteNeighborAndUpdateRoutingTable(int n){//É¾³ıÒ»¸ö×Ô¼ºµÄÁÚ¾Ó½ÚµãBy id£¬Ë³±ãÉ¾µôÂ·ÓÉ±íµÄÏà¹ØĞÅÏ¢
+void Node::DeleteNeighborAndUpdateRoutingTable(int n){//åˆ é™¤ä¸€ä¸ªè‡ªå·±çš„é‚»å±…èŠ‚ç‚¹By idï¼Œé¡ºä¾¿åˆ æ‰è·¯ç”±è¡¨çš„ç›¸å…³ä¿¡æ¯
 	for(vector<int>::iterator first = neighbors.begin(); first != neighbors.end(); ++first){
 		if(n == *first){
 			neighbors.erase(first);
@@ -1107,7 +1107,7 @@ void Node::DeleteNeighborAndUpdateRoutingTable(int n){//É¾³ıÒ»¸ö×Ô¼ºµÄÁÚ¾Ó½ÚµãBy
 		}
 	}
 	if(currentState == NonGatewayNode && nodes[n]->IsGatewayNodeOrNot() == GatewayNode){
-		//É¾µôµÄÁÚ¾ÓÊÇÒ»¸ögateway½Úµã£¬¾ÍĞèÒª¿¼ÂÇ×Ô¼ºÊÇ²»ÊÇĞèÒª¸üĞÂÂ·ÓÉ±í
+		//åˆ æ‰çš„é‚»å±…æ˜¯ä¸€ä¸ªgatewayèŠ‚ç‚¹ï¼Œå°±éœ€è¦è€ƒè™‘è‡ªå·±æ˜¯ä¸æ˜¯éœ€è¦æ›´æ–°è·¯ç”±è¡¨
 		MakeSureIsGatewayNodeOrNot();
 		if(currentState == GatewayNode){
 			FurtherDecision(-1);
@@ -1115,7 +1115,7 @@ void Node::DeleteNeighborAndUpdateRoutingTable(int n){//É¾³ıÒ»¸ö×Ô¼ºµÄÁÚ¾Ó½ÚµãBy
 		UpdateRoutingTable();
 	}
 }
-vector<int> Node::GetDomainMembers(){//»ñµÃ×Ô¼ºdomain nodes
+vector<int> Node::GetDomainMembers(){//è·å¾—è‡ªå·±domain nodes
 	return domainMembers;
 }
 void Node::ClearInfo(){
@@ -1128,7 +1128,7 @@ void Node::ClearInfo(){
 	currentState = NonGatewayNode;
 	currentWorkState = Receiving;
 }
-bool VectorBelong2Vector(vector<int> first, int v, vector<int> second, int u){//ÅĞ¶ÏµÚÒ»¸öÏòÁ¿ÊÇ·ñÊÇµÚ¶ş¸öÏòÁ¿µÄ×Ó¼¯,±Õ¼¯
+bool VectorBelong2Vector(vector<int> first, int v, vector<int> second, int u){//åˆ¤æ–­ç¬¬ä¸€ä¸ªå‘é‡æ˜¯å¦æ˜¯ç¬¬äºŒä¸ªå‘é‡çš„å­é›†,é—­é›†
 	size_t j = 0;
 	first.push_back(v);
 	second.push_back(u);
@@ -1146,7 +1146,7 @@ bool VectorBelong2Vector(vector<int> first, int v, vector<int> second, int u){//
 	return true;
 }
 
-bool VectorBelong2VectorAndVector(vector<int> first, vector<int> second, vector<int> third){//ÅĞ¶ÏµÚÒ»¸öÏòÁ¿ÊÇ·ñÊÇÊôÓÚºóÁ½¸öÏòÁ¿µÄ²¢¼¯
+bool VectorBelong2VectorAndVector(vector<int> first, vector<int> second, vector<int> third){//åˆ¤æ–­ç¬¬ä¸€ä¸ªå‘é‡æ˜¯å¦æ˜¯å±äºåä¸¤ä¸ªå‘é‡çš„å¹¶é›†
 	size_t j = 0;
 	for(size_t i = 0; i < third.size(); ++i){
 		second.push_back(third[i]);

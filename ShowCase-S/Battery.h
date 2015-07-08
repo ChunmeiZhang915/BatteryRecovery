@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include<iostream>
 #include<vector>
 #include<stdio.h> 
@@ -8,20 +8,20 @@
 #include<queue>
 #include<string>
 #include<sstream>
-#define INITIAL_NORM_ENERGY (double)25200//¶î¶¨ÈİÁ¿£¬×î³õµÄÄÜÁ¿£¬ÆäÊµ¸÷¸ö½ÚµãÒ²¿ÉÒÔ²»Í¬µÄ£¬
-#define INTIAL_MAX_RECOVER_ENERGY (double)7200//×î´óÈİÁ¿
-//#define INITIAL_NORM_ENERGY (double)2520000//¶î¶¨ÈİÁ¿£¬×î³õµÄÄÜÁ¿£¬ÆäÊµ¸÷¸ö½ÚµãÒ²¿ÉÒÔ²»Í¬µÄ£¬
-//#define INTIAL_MAX_RECOVER_ENERGY (double)720000//×î´óÈİÁ¿
-#define SEND_PACKET_ENERGY 1 //·¢ËÍÒ»¸öÊı¾İ°üĞèÒªµÄÄÜÁ¿
-#define RECEIVE_PACKET_ENERGY 0.5 //½ÓÊÕÒ»¸öÊı¾İ°üĞèÒªµÄÄÜÁ¿
-#define BATTERY_RECOVERY_ENERGY 0.3 //µç³ØĞİÏ¢Ò»¸öÊ±¼äµ¥Î»»Ö¸´µÄµçÁ¿
+#define INITIAL_NORM_ENERGY (double)25200//é¢å®šå®¹é‡ï¼Œæœ€åˆçš„èƒ½é‡ï¼Œå…¶å®å„ä¸ªèŠ‚ç‚¹ä¹Ÿå¯ä»¥ä¸åŒçš„ï¼Œ
+#define INTIAL_MAX_RECOVER_ENERGY (double)7200//æœ€å¤§å®¹é‡
+//#define INITIAL_NORM_ENERGY (double)2520000//é¢å®šå®¹é‡ï¼Œæœ€åˆçš„èƒ½é‡ï¼Œå…¶å®å„ä¸ªèŠ‚ç‚¹ä¹Ÿå¯ä»¥ä¸åŒçš„ï¼Œ
+//#define INTIAL_MAX_RECOVER_ENERGY (double)720000//æœ€å¤§å®¹é‡
+#define SEND_PACKET_ENERGY 1 //å‘é€ä¸€ä¸ªæ•°æ®åŒ…éœ€è¦çš„èƒ½é‡
+#define RECEIVE_PACKET_ENERGY 0.5 //æ¥æ”¶ä¸€ä¸ªæ•°æ®åŒ…éœ€è¦çš„èƒ½é‡
+#define BATTERY_RECOVERY_ENERGY 0.3 //ç”µæ± ä¼‘æ¯ä¸€ä¸ªæ—¶é—´å•ä½æ¢å¤çš„ç”µé‡
 #define WORK_CURRENT 24.8//in receive mode, the current is 24.8mA
 #define IDLE_CURRENT  1.821 // in idle mode, the current is 1.821mA
 #define SLEEP_CURRENT 0.0061//in sleep mode, the current is 6.1 uA
-#define SLEEP_CONSUME 2.4//ĞİÏ¢µÄÊ±ºòÒ²ÒªÏûºÄÒ»¶¨µÄÄÜÁ¿ 2400 uA
-#define ENERGEY_GRADE (double)100 //ÄÜÁ¿±»»®·Ö³ÉÒ»¸öµÈ¼¶µÄÈİÁ¿
+#define SLEEP_CONSUME 2.4//ä¼‘æ¯çš„æ—¶å€™ä¹Ÿè¦æ¶ˆè€—ä¸€å®šçš„èƒ½é‡ 2400 uA
+#define ENERGEY_GRADE (double)100 //èƒ½é‡è¢«åˆ’åˆ†æˆä¸€ä¸ªç­‰çº§çš„å®¹é‡
 using namespace std;
-enum NodeWorkState{Receiving, Sleeping};//Idling:Ö»ÊÇ¹ØµôÍ¨ĞÅÉè±¸£¬ sleepingÊÇÖ¸µç³ØÍ£Ö¹Êä³ö
+enum NodeWorkState{Receiving, Sleeping};//Idling:åªæ˜¯å…³æ‰é€šä¿¡è®¾å¤‡ï¼Œ sleepingæ˜¯æŒ‡ç”µæ± åœæ­¢è¾“å‡º
 extern vector<double> recoveryCurrent;
 class Battery{
 public:

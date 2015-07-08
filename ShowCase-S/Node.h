@@ -1,41 +1,41 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Battery.h"
 #include"Packet.h"
-#define DIS(a1, b1, a2, b2) sqrt((((double)(a1) - (double)(a2)) * ((double)(a1) - (double)(a2)))+ (((double)(b1) - (double)(b2)) * ((double)(b1) - (double)(b2)))) //ÇóÁ½¸öµãÖ®¼äµÄ¾àÀë
-#define NODE_NUMBER 50//½ÚµãÊıÁ¿
-#define SIMULATION_TIME 220000//·ÂÕæ×ÜÊ±³¤ 500s
-#define LENGTH (double)900;//ÇøÓò³¤¶È
-#define WIDTH (double)650;//ÇøÓò¿í¶È
+#define DIS(a1, b1, a2, b2) sqrt((((double)(a1) - (double)(a2)) * ((double)(a1) - (double)(a2)))+ (((double)(b1) - (double)(b2)) * ((double)(b1) - (double)(b2)))) //æ±‚ä¸¤ä¸ªç‚¹ä¹‹é—´çš„è·ç¦»
+#define NODE_NUMBER 50//èŠ‚ç‚¹æ•°é‡
+#define SIMULATION_TIME 220000//ä»¿çœŸæ€»æ—¶é•¿ 500s
+#define LENGTH (double)900;//åŒºåŸŸé•¿åº¦
+#define WIDTH (double)650;//åŒºåŸŸå®½åº¦
 
 
-#define SENSE_DURATION 5 //²ÉÑùÆµÂÊ
+#define SENSE_DURATION 5 //é‡‡æ ·é¢‘ç‡
 
-#define POSIBILITY_PACKET_GENERATING 0.5//²úÉúÊı¾İ°üµÄ¸ÅÂÊ
-#define POSIBILITY_MOVEMENT 0.2//½ÚµãÒÆ¶¯µÄ¸ÅÂÊ
-#define DISTANCE_MOVEMENT 10//½ÚµãÃ¿Ò»´Î£¨s£©µÄ×î´óÒÆ¶¯¾àÀë
+#define POSIBILITY_PACKET_GENERATING 0.5//äº§ç”Ÿæ•°æ®åŒ…çš„æ¦‚ç‡
+#define POSIBILITY_MOVEMENT 0.2//èŠ‚ç‚¹ç§»åŠ¨çš„æ¦‚ç‡
+#define DISTANCE_MOVEMENT 10//èŠ‚ç‚¹æ¯ä¸€æ¬¡ï¼ˆsï¼‰çš„æœ€å¤§ç§»åŠ¨è·ç¦»
 #define PI 3.1415926
 
-#define COMMUNICATION_RANGE (double)600 //Í¨ĞÅ¾àÀë£¬¸÷¸ö½ÚµãÆäÊµÒ²¿ÉÒÔ²»Í¬µÄ
-#define RADIUS 7 //»­µãÓÃµÄÊıÖµ
-#define SHIFT_MOVE 10//ÓÃÓÚ»­µã£¬Õı·½ĞÍµÄÖĞĞÄÒÆ¶¯µ½×ó¶¥µã
-#define MAX_TIME 100//Êı¾İ°üµÄTTL
+#define COMMUNICATION_RANGE (double)600 //é€šä¿¡è·ç¦»ï¼Œå„ä¸ªèŠ‚ç‚¹å…¶å®ä¹Ÿå¯ä»¥ä¸åŒçš„
+#define RADIUS 7 //ç”»ç‚¹ç”¨çš„æ•°å€¼
+#define SHIFT_MOVE 10//ç”¨äºç”»ç‚¹ï¼Œæ­£æ–¹å‹çš„ä¸­å¿ƒç§»åŠ¨åˆ°å·¦é¡¶ç‚¹
+#define MAX_TIME 100//æ•°æ®åŒ…çš„TTL
 
-#define THRESHOLD 14//µç³Ø»Ö¸´Ä£ĞÍµÄÊı¾İÖµ
-#define MAX_WORK_TIME 10//×î´ó¹¤×÷Ê±¼ä
-#define UPDATE_DURATION 11//¸üĞÂÖÜÆÚ
-#define MAX_PACKETS_PER_SLOT 3 ////´ÓÊı¾İ°ü²úÉúµ½ÏÂÒ»ÌøÊÕµ½µÄÊ±¼ä¼ä¸ôÄÚ¿ÉÒÔ·¢ËÍµÄ×î´óÊıÄ¿µÄÊı¾İ°ü
+#define THRESHOLD 14//ç”µæ± æ¢å¤æ¨¡å‹çš„æ•°æ®å€¼
+#define MAX_WORK_TIME 10//æœ€å¤§å·¥ä½œæ—¶é—´
+#define UPDATE_DURATION 11//æ›´æ–°å‘¨æœŸ
+#define MAX_PACKETS_PER_SLOT 3 ////ä»æ•°æ®åŒ…äº§ç”Ÿåˆ°ä¸‹ä¸€è·³æ”¶åˆ°çš„æ—¶é—´é—´éš”å†…å¯ä»¥å‘é€çš„æœ€å¤§æ•°ç›®çš„æ•°æ®åŒ…
 using namespace std;
-enum NodeState{GatewayNode, NonGatewayNode, WhoKnows};//GatewayNode:ÊôÓÚdominating set£» NonGatewayNode£º²»ÊôÓÚdominating set,sleeping×´Ì¬ÏÂÊôÓÚWhoKnows
+enum NodeState{GatewayNode, NonGatewayNode, WhoKnows};//GatewayNode:å±äºdominating setï¼› NonGatewayNodeï¼šä¸å±äºdominating set,sleepingçŠ¶æ€ä¸‹å±äºWhoKnows
 
-struct RoutingEntry{//Â·ÓÉ±íÖĞµÄÌõÄ¿
+struct RoutingEntry{//è·¯ç”±è¡¨ä¸­çš„æ¡ç›®
 	int destination;
 	int nextHop;
 	int distance;
 };
 class Node{
 public:
-	Node(int id);//width±íÊ¾Îª0µÄÊ±ºò£¬¿ÉÄÜ»áÓÃµ½Ô²ĞÎµÄÍøÂç£¬
+	Node(int id);//widthè¡¨ç¤ºä¸º0çš„æ—¶å€™ï¼Œå¯èƒ½ä¼šç”¨åˆ°åœ†å½¢çš„ç½‘ç»œï¼Œ
 	Node(int id, double x, double y):id(id),xLoc(x),yLoc(y){
 		workingTime = 0;
 		relaxingTime = 0;
@@ -48,63 +48,63 @@ public:
 	}
 	~Node();
 public:
-	void BroadcastPhase();//¹ã²¥½×¶Î
-	void MakeSureIsGatewayNodeOrNot();//È·¶¨×Ô¼ºÊÇ·ñÊÇgateway node
-	void FurtherDecision(const int &);//½øÒ»²½È·¶¨×Ô¼ºÊÇ²»ÊÇgateway node£¬´Ó¶ø¾«¼òdominating setµÄ´óĞ¡
-	void MovementSimulation();//È·¶¨×Ô¼ºÊÇ·ñÒÆ¶¯£¬²»ÒÆ¶¯·µ»Øfalse£¬ÒÆ¶¯µÄ»°ÖØÖÃÏà¹ØĞÅÏ¢,µ¼ÖÂÖ÷¸É¼¯µÄ±ä»¯Ëµ²»¶¨
-	void WakeupAfterSleep();//ĞÑÀ´Ö®ºóĞèÒª¸ÉµÄÊÂÇé
-	bool ForcedSleep();//Ç¿ÖÆĞİÏ¢
-	void AddNeighbors(int i);//³õÊ¼»¯½×¶ÎÌí¼ÓÁÚ¾Ó£¬ÊÕ¼¯ÁÚ¾ÓµÄĞÅÏ¢
-	void AddNeighborAndUpdateRoutingTable(int);//Ôö¼ÓÒ»¸öneighbor,²¢¸üĞÂÂ·ÓÉ±í
-	void PacketGenerating(int time);//ÊÇ·ñ²úÉúÊı¾İ°ü£¬ÒÔ¼°ÄÜÁ¿ÏûºÄ
+	void BroadcastPhase();//å¹¿æ’­é˜¶æ®µ
+	void MakeSureIsGatewayNodeOrNot();//ç¡®å®šè‡ªå·±æ˜¯å¦æ˜¯gateway node
+	void FurtherDecision(const int &);//è¿›ä¸€æ­¥ç¡®å®šè‡ªå·±æ˜¯ä¸æ˜¯gateway nodeï¼Œä»è€Œç²¾ç®€dominating setçš„å¤§å°
+	void MovementSimulation();//ç¡®å®šè‡ªå·±æ˜¯å¦ç§»åŠ¨ï¼Œä¸ç§»åŠ¨è¿”å›falseï¼Œç§»åŠ¨çš„è¯é‡ç½®ç›¸å…³ä¿¡æ¯,å¯¼è‡´ä¸»å¹²é›†çš„å˜åŒ–è¯´ä¸å®š
+	void WakeupAfterSleep();//é†’æ¥ä¹‹åéœ€è¦å¹²çš„äº‹æƒ…
+	bool ForcedSleep();//å¼ºåˆ¶ä¼‘æ¯
+	void AddNeighbors(int i);//åˆå§‹åŒ–é˜¶æ®µæ·»åŠ é‚»å±…ï¼Œæ”¶é›†é‚»å±…çš„ä¿¡æ¯
+	void AddNeighborAndUpdateRoutingTable(int);//å¢åŠ ä¸€ä¸ªneighbor,å¹¶æ›´æ–°è·¯ç”±è¡¨
+	void PacketGenerating(int time);//æ˜¯å¦äº§ç”Ÿæ•°æ®åŒ…ï¼Œä»¥åŠèƒ½é‡æ¶ˆè€—
 	void CopyNode(const int& id, const double& x, const double& y, const NodeState& isGateway, const NodeWorkState&  workState, const double& capacity, const int& totWorkTime, const int& relaTime, const int& workTime, const double& tranRange, const string& str);
-	void AddTime();//Ôö¼Ó¾àÀëÉÏ´Î×÷Îªgateway node¹¤×÷µÄĞİÏ¢Ê±¼ä£¬
-	int GetId();//»ñµÃ½ÚµãID
-	double GetXLoc();//»ñµÃx×ø±êÖá
-	double GetYLoc();//»ñµÃy×ø±êÖá
-	double GetTransDis();//»ñµÃÍ¨ĞÅ¾àÀë
-	int GetWorkingTime();//»ñµÃÒÑ¾­¹¤×÷µÄÊ±¼ä
-	int GetTotalWorkTime(){return totalWorkTime;}//»ñµÃ×ÜµÄ¹¤×÷Ê±¼ä
+	void AddTime();//å¢åŠ è·ç¦»ä¸Šæ¬¡ä½œä¸ºgateway nodeå·¥ä½œçš„ä¼‘æ¯æ—¶é—´ï¼Œ
+	int GetId();//è·å¾—èŠ‚ç‚¹ID
+	double GetXLoc();//è·å¾—xåæ ‡è½´
+	double GetYLoc();//è·å¾—yåæ ‡è½´
+	double GetTransDis();//è·å¾—é€šä¿¡è·ç¦»
+	int GetWorkingTime();//è·å¾—å·²ç»å·¥ä½œçš„æ—¶é—´
+	int GetTotalWorkTime(){return totalWorkTime;}//è·å¾—æ€»çš„å·¥ä½œæ—¶é—´
 	int GetRelaxingTime(){return relaxingTime;}
-	NodeState IsGatewayNodeOrNot();//»ñµÃ×Ô¼ºÊÇ·ñÊÇgateway node
+	NodeState IsGatewayNodeOrNot();//è·å¾—è‡ªå·±æ˜¯å¦æ˜¯gateway node
 	void SetNodeStatus(NodeState i);
-	vector<int> GetNeighbors();//»ñµÃ×Ô¼ºµÄÁÚ¾Ó½Úµã
-	void DeleteNeighborAndUpdateRoutingTable(int);//É¾³ıÒ»¸ö×Ô¼ºµÄÁÚ¾Ó½ÚµãBy id,Ë³±ãÉ¾µôÂ·ÓÉ±íµÄÏà¹ØĞÅÏ¢
-	void UpdateRoutingTable();//¸üĞÂÂ·ÓÉ±íºÍdomain nodes
-	vector<int> GetDomainMembers();//»ñµÃ×Ô¼ºdomain nodes
-	void Routing();//Â·ÓÉ£¬È·¶¨Êı¾İ°üÔÚÂ·ÓÉ½×¶Î¾­¹ıÄÄĞ©½Úµã£¬ÏàÓ¦½Úµã¾ÍĞèÒªÄÜÁ¿¼õÉÙ
+	vector<int> GetNeighbors();//è·å¾—è‡ªå·±çš„é‚»å±…èŠ‚ç‚¹
+	void DeleteNeighborAndUpdateRoutingTable(int);//åˆ é™¤ä¸€ä¸ªè‡ªå·±çš„é‚»å±…èŠ‚ç‚¹By id,é¡ºä¾¿åˆ æ‰è·¯ç”±è¡¨çš„ç›¸å…³ä¿¡æ¯
+	void UpdateRoutingTable();//æ›´æ–°è·¯ç”±è¡¨å’Œdomain nodes
+	vector<int> GetDomainMembers();//è·å¾—è‡ªå·±domain nodes
+	void Routing();//è·¯ç”±ï¼Œç¡®å®šæ•°æ®åŒ…åœ¨è·¯ç”±é˜¶æ®µç»è¿‡å“ªäº›èŠ‚ç‚¹ï¼Œç›¸åº”èŠ‚ç‚¹å°±éœ€è¦èƒ½é‡å‡å°‘
 	void RoutingWithBufferedPackets();
-	void AddEnergy(double);//ÄÜÁ¿µÄ¼Ó¼õ
+	void AddEnergy(double);//èƒ½é‡çš„åŠ å‡
 	void PushPackets(Packet p);
 	Battery* GetBattery(){return m_Battery;}
 	NodeWorkState GetNodeWorkState(){return currentWorkState;}
 	void SetNodeWorkStatus(NodeWorkState s){currentWorkState = s;}
 	string GetAllNeighborsText(){return neis;}
-	void ClearInfo();//Çå¿ÕÂ·ÓÉ±íÊ²Ã´µÄ£¬Ã¿Ò»´Î¾ºÕù¶¼ÊÇ
+	void ClearInfo();//æ¸…ç©ºè·¯ç”±è¡¨ä»€ä¹ˆçš„ï¼Œæ¯ä¸€æ¬¡ç«äº‰éƒ½æ˜¯
 private:
 	int id;//ID
-	double xLoc;//x×ø±ê
-	double yLoc;//y×ø±ê
-	double transDis;//Í¨ĞÅ¾àÀë
-	int workingTime;//¾àÀëÉÏ´ÎĞİÏ¢ÒÑ¾­¹¤×÷µÄÊ±¼ä£¬ÒÔÃëÎªµ¥Î»
-	int relaxingTime;//¾àÀëÉÏ´Î×÷Îªgateway node¹¤×÷µÄĞİÏ¢Ê±¼ä£¬
-	int hop;//Êı¾İ°ü¾­¹ıµÄÌøÊı
-	int totalWorkTime;//½Úµã×Ü¹²¹¤×÷µÄÊ±¼ä
-	NodeState currentState;//±íÊ¾¸Ã½ÚµãÊÇ·ñÊôÓÚdominating set
-	NodeWorkState currentWorkState;//±íÊ¾¸Ã½ÚµãµÄµ±Ç°¹¤×÷×´Ì¬£¬work£¬idle£¬or sleep
-	vector<int> neighbors;//¸Ã½ÚµãµÄËùÓĞÁÚ¾Ó
-	vector<int> domainMembers;//Èç¹ûÊÇgateway½Úµã£¬Ôò±íÊ¾¸Ã½ÚµãÖÜÎ§µÄ·Çgateway½Úµã
-	vector<RoutingEntry> routingTable;//Èç¹ûÊÇgateway½Úµã£¬Ôò±íÊ¾¸Ã½ÚµãµÄÂ·ÓÉ±í£¬Èç¹ûÊÇ·Çgateway½Úµã£¬Ôò±íÊ¾Óë¸Ã½ÚµãÖ±½ÓÏàÁ¬µÄgateway½Úµã
-	queue<int> allNodesOfForwardedPacket;//ËùÓĞ²ÎÓëÊı¾İ°ü×ª·¢µÄ½Úµã£¬·½±ãÄÜÁ¿µÄ¼Ó¼õ
+	double xLoc;//xåæ ‡
+	double yLoc;//yåæ ‡
+	double transDis;//é€šä¿¡è·ç¦»
+	int workingTime;//è·ç¦»ä¸Šæ¬¡ä¼‘æ¯å·²ç»å·¥ä½œçš„æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½
+	int relaxingTime;//è·ç¦»ä¸Šæ¬¡ä½œä¸ºgateway nodeå·¥ä½œçš„ä¼‘æ¯æ—¶é—´ï¼Œ
+	int hop;//æ•°æ®åŒ…ç»è¿‡çš„è·³æ•°
+	int totalWorkTime;//èŠ‚ç‚¹æ€»å…±å·¥ä½œçš„æ—¶é—´
+	NodeState currentState;//è¡¨ç¤ºè¯¥èŠ‚ç‚¹æ˜¯å¦å±äºdominating set
+	NodeWorkState currentWorkState;//è¡¨ç¤ºè¯¥èŠ‚ç‚¹çš„å½“å‰å·¥ä½œçŠ¶æ€ï¼Œworkï¼Œidleï¼Œor sleep
+	vector<int> neighbors;//è¯¥èŠ‚ç‚¹çš„æ‰€æœ‰é‚»å±…
+	vector<int> domainMembers;//å¦‚æœæ˜¯gatewayèŠ‚ç‚¹ï¼Œåˆ™è¡¨ç¤ºè¯¥èŠ‚ç‚¹å‘¨å›´çš„égatewayèŠ‚ç‚¹
+	vector<RoutingEntry> routingTable;//å¦‚æœæ˜¯gatewayèŠ‚ç‚¹ï¼Œåˆ™è¡¨ç¤ºè¯¥èŠ‚ç‚¹çš„è·¯ç”±è¡¨ï¼Œå¦‚æœæ˜¯égatewayèŠ‚ç‚¹ï¼Œåˆ™è¡¨ç¤ºä¸è¯¥èŠ‚ç‚¹ç›´æ¥ç›¸è¿çš„gatewayèŠ‚ç‚¹
+	queue<int> allNodesOfForwardedPacket;//æ‰€æœ‰å‚ä¸æ•°æ®åŒ…è½¬å‘çš„èŠ‚ç‚¹ï¼Œæ–¹ä¾¿èƒ½é‡çš„åŠ å‡
 	string neis;//for neighbors to be displayed int the screen
-	queue<Packet> bufferedPackets;//ÔÚsink½Úµã¼ÇµÃdelete
-	Battery* m_Battery;//½ÚµãÖĞµÄµç³Ø
+	queue<Packet> bufferedPackets;//åœ¨sinkèŠ‚ç‚¹è®°å¾—delete
+	Battery* m_Battery;//èŠ‚ç‚¹ä¸­çš„ç”µæ± 
 };
 
-extern vector<Node*> nodes;//ÍøÂçÖĞµÄ½Úµã
-bool VectorBelong2Vector(vector<int>, int, vector<int>, int);//ÅĞ¶ÏµÚÒ»¸öÏòÁ¿ÊÇ·ñÊÇµÚ¶ş¸öÏòÁ¿µÄ×Ó¼¯,±Õ¼¯
-bool VectorBelong2VectorAndVector(vector<int>, vector<int>, vector<int>);//ÅĞ¶ÏµÚÒ»¸öÏòÁ¿ÊÇ·ñÊÇÊôÓÚºóÁ½¸öÏòÁ¿µÄ²¢¼¯
-void Rule1(int id1, int id2);//Á½¸ö½ÚµãÖ®¼äµÄ±È½Ï£¬¾ö¶¨id1ÊÇ²»ÊÇgateway½Úµã
+extern vector<Node*> nodes;//ç½‘ç»œä¸­çš„èŠ‚ç‚¹
+bool VectorBelong2Vector(vector<int>, int, vector<int>, int);//åˆ¤æ–­ç¬¬ä¸€ä¸ªå‘é‡æ˜¯å¦æ˜¯ç¬¬äºŒä¸ªå‘é‡çš„å­é›†,é—­é›†
+bool VectorBelong2VectorAndVector(vector<int>, vector<int>, vector<int>);//åˆ¤æ–­ç¬¬ä¸€ä¸ªå‘é‡æ˜¯å¦æ˜¯å±äºåä¸¤ä¸ªå‘é‡çš„å¹¶é›†
+void Rule1(int id1, int id2);//ä¸¤ä¸ªèŠ‚ç‚¹ä¹‹é—´çš„æ¯”è¾ƒï¼Œå†³å®šid1æ˜¯ä¸æ˜¯gatewayèŠ‚ç‚¹
 void Rule2(int id1, int id2, int id3);
-void Rule11(int id1, int id2);//Á½¸ö½ÚµãÖ®¼äµÄ±È½Ï£¬¾ö¶¨id1ÊÇ²»ÊÇgateway½Úµã
+void Rule11(int id1, int id2);//ä¸¤ä¸ªèŠ‚ç‚¹ä¹‹é—´çš„æ¯”è¾ƒï¼Œå†³å®šid1æ˜¯ä¸æ˜¯gatewayèŠ‚ç‚¹
 void Rule22(int id1, int id2, int id3);

@@ -1,5 +1,5 @@
-
-// ShowCaseDlg.cpp : ÊµÏÖÎÄ¼ş
+ï»¿
+// ShowCaseDlg.cpp : å®ç°æ–‡ä»¶
 //
 
 #include "stdafx.h"
@@ -13,20 +13,20 @@
 #endif
 
 
-// ÓÃÓÚÓ¦ÓÃ³ÌĞò¡°¹ØÓÚ¡±²Ëµ¥ÏîµÄ CAboutDlg ¶Ô»°¿ò
+// ç”¨äºåº”ç”¨ç¨‹åºâ€œå…³äºâ€èœå•é¡¹çš„ CAboutDlg å¯¹è¯æ¡†
 
 class CAboutDlg : public CDialogEx
 {
 public:
 	CAboutDlg();
 
-// ¶Ô»°¿òÊı¾İ
+// å¯¹è¯æ¡†æ•°æ®
 	enum { IDD = IDD_ABOUTBOX };
 
 	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV æ”¯æŒ
 
-// ÊµÏÖ
+// å®ç°
 protected:
 	DECLARE_MESSAGE_MAP()
 };
@@ -44,7 +44,7 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// CShowCaseDlg ¶Ô»°¿ò
+// CShowCaseDlg å¯¹è¯æ¡†
 
 
 
@@ -96,15 +96,15 @@ BEGIN_MESSAGE_MAP(CShowCaseDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// CShowCaseDlg ÏûÏ¢´¦Àí³ÌĞò
+// CShowCaseDlg æ¶ˆæ¯å¤„ç†ç¨‹åº
 
 BOOL CShowCaseDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	// ½«¡°¹ØÓÚ...¡±²Ëµ¥ÏîÌí¼Óµ½ÏµÍ³²Ëµ¥ÖĞ¡£
+	// å°†â€œå…³äº...â€èœå•é¡¹æ·»åŠ åˆ°ç³»ç»Ÿèœå•ä¸­ã€‚
 
-	// IDM_ABOUTBOX ±ØĞëÔÚÏµÍ³ÃüÁî·¶Î§ÄÚ¡£
+	// IDM_ABOUTBOX å¿…é¡»åœ¨ç³»ç»Ÿå‘½ä»¤èŒƒå›´å†…ã€‚
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 
@@ -122,22 +122,22 @@ BOOL CShowCaseDlg::OnInitDialog()
 		}
 	}
 
-	// ÉèÖÃ´Ë¶Ô»°¿òµÄÍ¼±ê¡£µ±Ó¦ÓÃ³ÌĞòÖ÷´°¿Ú²»ÊÇ¶Ô»°¿òÊ±£¬¿ò¼Ü½«×Ô¶¯
-	//  Ö´ĞĞ´Ë²Ù×÷
-	SetIcon(m_hIcon, TRUE);			// ÉèÖÃ´óÍ¼±ê
-	SetIcon(m_hIcon, FALSE);		// ÉèÖÃĞ¡Í¼±ê
+	// è®¾ç½®æ­¤å¯¹è¯æ¡†çš„å›¾æ ‡ã€‚å½“åº”ç”¨ç¨‹åºä¸»çª—å£ä¸æ˜¯å¯¹è¯æ¡†æ—¶ï¼Œæ¡†æ¶å°†è‡ªåŠ¨
+	//  æ‰§è¡Œæ­¤æ“ä½œ
+	SetIcon(m_hIcon, TRUE);			// è®¾ç½®å¤§å›¾æ ‡
+	SetIcon(m_hIcon, FALSE);		// è®¾ç½®å°å›¾æ ‡
 
-	// TODO: ÔÚ´ËÌí¼Ó¶îÍâµÄ³õÊ¼»¯´úÂë
+	// TODO: åœ¨æ­¤æ·»åŠ é¢å¤–çš„åˆå§‹åŒ–ä»£ç 
 	//CRect temprect(0,0,1640,1480);
   // SetWindowPos(NULL,0,0,temprect.Width(),temprect.Height(),SWP_NOZORDER|SWP_NOMOVE);
 //	SetWindowPos(NULL, 0, 0, 1000, 500, SWP_SHOWWINDOW );
 	CaculateCurrent();
 	CenterWindow();
-	GetClientRect(&m_rect);//µÃµ½µ±Ç°¶Ô»°¿òµÄ´óĞ¡
+	GetClientRect(&m_rect);//å¾—åˆ°å½“å‰å¯¹è¯æ¡†çš„å¤§å°
 	m_timeSpinCtrl.SetRange(0, SIMULATION_TIME);
 	m_timeSpinCtrl.SetBuddy(GetDlgItem(IDC_TIME_EDIT));
 	
-	//ÍøÂçÔËĞĞ´úÂë
+	//ç½‘ç»œè¿è¡Œä»£ç 
 	nt = new Network();
 	nt->ConstructNetwork();
 
@@ -147,21 +147,21 @@ BOOL CShowCaseDlg::OnInitDialog()
 	
 	SetDlgItemText(IDC_TIME_EDIT, _T("0"));
 	SetTimer(1, 1, NULL);
-	return TRUE;  // ³ı·Ç½«½¹µãÉèÖÃµ½¿Ø¼ş£¬·ñÔò·µ»Ø TRUE
+	return TRUE;  // é™¤éå°†ç„¦ç‚¹è®¾ç½®åˆ°æ§ä»¶ï¼Œå¦åˆ™è¿”å› TRUE
 }
 void CShowCaseDlg::ReSize(int nID, int cx, int cy){
 	CWnd *pWnd; 
-    pWnd = GetDlgItem(nID);     //»ñÈ¡¿Ø¼ş¾ä±ú
+    pWnd = GetDlgItem(nID);     //è·å–æ§ä»¶å¥æŸ„
     if(pWnd)   
     {
-        CRect rect;   //»ñÈ¡¿Ø¼ş±ä»¯Ç°´óĞ¡
+        CRect rect;   //è·å–æ§ä»¶å˜åŒ–å‰å¤§å°
         pWnd->GetWindowRect(&rect);
-        ScreenToClient(&rect);//½«¿Ø¼ş´óĞ¡×ª»»ÎªÔÚ¶Ô»°¿òÖĞµÄÇøÓò×ø±ê
-        //rect.left=(int)(rect.left*((float)cx/(float)m_rect.Width()));//µ÷Õû¿Ø¼ş´óĞ¡
+        ScreenToClient(&rect);//å°†æ§ä»¶å¤§å°è½¬æ¢ä¸ºåœ¨å¯¹è¯æ¡†ä¸­çš„åŒºåŸŸåæ ‡
+        //rect.left=(int)(rect.left*((float)cx/(float)m_rect.Width()));//è°ƒæ•´æ§ä»¶å¤§å°
         rect.right=(int)(rect.right*((float)cx/(float)m_rect.Width()));
        // rect.top=(int)(rect.top*((float)cy/(float)m_rect.Height()));
         rect.bottom = (int)(rect.bottom*((float)cy/(float)m_rect.Height()));
-        pWnd->MoveWindow(rect);//ÉèÖÃ¿Ø¼şÎ»ÖÃ
+        pWnd->MoveWindow(rect);//è®¾ç½®æ§ä»¶ä½ç½®
     }
 }
 void CShowCaseDlg::OnClose(){
@@ -186,19 +186,19 @@ void CShowCaseDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	}
 }
 
-// Èç¹ûÏò¶Ô»°¿òÌí¼Ó×îĞ¡»¯°´Å¥£¬ÔòĞèÒªÏÂÃæµÄ´úÂë
-//  À´»æÖÆ¸ÃÍ¼±ê¡£¶ÔÓÚÊ¹ÓÃÎÄµµ/ÊÓÍ¼Ä£ĞÍµÄ MFC Ó¦ÓÃ³ÌĞò£¬
-//  Õâ½«ÓÉ¿ò¼Ü×Ô¶¯Íê³É¡£
+// å¦‚æœå‘å¯¹è¯æ¡†æ·»åŠ æœ€å°åŒ–æŒ‰é’®ï¼Œåˆ™éœ€è¦ä¸‹é¢çš„ä»£ç 
+//  æ¥ç»˜åˆ¶è¯¥å›¾æ ‡ã€‚å¯¹äºä½¿ç”¨æ–‡æ¡£/è§†å›¾æ¨¡å‹çš„ MFC åº”ç”¨ç¨‹åºï¼Œ
+//  è¿™å°†ç”±æ¡†æ¶è‡ªåŠ¨å®Œæˆã€‚
 
 void CShowCaseDlg::OnPaint()
 {
 	if (IsIconic())
 	{
-		CPaintDC dc(this); // ÓÃÓÚ»æÖÆµÄÉè±¸ÉÏÏÂÎÄ
+		CPaintDC dc(this); // ç”¨äºç»˜åˆ¶çš„è®¾å¤‡ä¸Šä¸‹æ–‡
 
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
-		// Ê¹Í¼±êÔÚ¹¤×÷Çø¾ØĞÎÖĞ¾ÓÖĞ
+		// ä½¿å›¾æ ‡åœ¨å·¥ä½œåŒºçŸ©å½¢ä¸­å±…ä¸­
 		int cxIcon = GetSystemMetrics(SM_CXICON);
 		int cyIcon = GetSystemMetrics(SM_CYICON);
 		CRect rect;
@@ -206,7 +206,7 @@ void CShowCaseDlg::OnPaint()
 		int x = (rect.Width() - cxIcon + 1) / 2;
 		int y = (rect.Height() - cyIcon + 1) / 2;
 
-		// »æÖÆÍ¼±ê
+		// ç»˜åˆ¶å›¾æ ‡
 		dc.DrawIcon(x, y, m_hIcon);
 	}
 	else
@@ -215,8 +215,8 @@ void CShowCaseDlg::OnPaint()
 	}
 }
 
-//µ±ÓÃ»§ÍÏ¶¯×îĞ¡»¯´°¿ÚÊ±ÏµÍ³µ÷ÓÃ´Ëº¯ÊıÈ¡µÃ¹â±ê
-//ÏÔÊ¾¡£
+//å½“ç”¨æˆ·æ‹–åŠ¨æœ€å°åŒ–çª—å£æ—¶ç³»ç»Ÿè°ƒç”¨æ­¤å‡½æ•°å–å¾—å…‰æ ‡
+//æ˜¾ç¤ºã€‚
 HCURSOR CShowCaseDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
@@ -228,13 +228,13 @@ void CShowCaseDlg::OnEnChangeTimeEdit()
 {
 	
 	if(m_currentTime != 0 && m_currentTime == GetDlgItemInt(IDC_TIME_EDIT)){
-		return;//Ã»ÓĞ¸ü¸ÄÖµ
+		return;//æ²¡æœ‰æ›´æ”¹å€¼
 	}
 	UpdateData(true);
 	CString m_currentTimeString;
 	GetDlgItemText(IDC_TIME_EDIT, m_currentTimeString);
-	//Çå¿ÕÍ¼Æ¬ÉÏµÄËùÓĞµÄµãºÍÏß
-	//»æÖÆĞÂµÄµãºÍÏß
+	//æ¸…ç©ºå›¾ç‰‡ä¸Šçš„æ‰€æœ‰çš„ç‚¹å’Œçº¿
+	//ç»˜åˆ¶æ–°çš„ç‚¹å’Œçº¿
 	//nodes.clear();
 	USES_CONVERSION; 
 	string m_timeFile = "da/";
@@ -242,9 +242,9 @@ void CShowCaseDlg::OnEnChangeTimeEdit()
 	m_timeFile += ".txt";
 	ifstream  inputFile(m_timeFile, ios_base::in);
 	if(inputFile.fail()){
-		MessageBox(_T("ÎÄ¼ş") + m_currentTimeString + _T(".txt´ò¿ªÊ§°Ü£¡"), _T("FAIL"), MB_OKCANCEL | MB_ICONQUESTION);
+		MessageBox(_T("æ–‡ä»¶") + m_currentTimeString + _T(".txtæ‰“å¼€å¤±è´¥ï¼"), _T("FAIL"), MB_OKCANCEL | MB_ICONQUESTION);
 	}else{
-		//MessageBox(_T("ÎÄ¼ş") + m_currentTimeString + _T(".txt´ò¿ª³É¹¦£¡"), _T("GOOD"), MB_OKCANCEL | MB_ICONQUESTION);
+		//MessageBox(_T("æ–‡ä»¶") + m_currentTimeString + _T(".txtæ‰“å¼€æˆåŠŸï¼"), _T("GOOD"), MB_OKCANCEL | MB_ICONQUESTION);
 		int id =-1;
 		double xAxis = 0.0, yAxis = 0.0;
 		int isGateway;
@@ -267,35 +267,35 @@ void CShowCaseDlg::OnEnChangeTimeEdit()
 			(nodes[id])->CopyNode(id, xAxis, yAxis, (NodeState)isGateway, (NodeWorkState)workState, capacity, totTime, relaTime, workTime, tranRange, re);
 		}
 		inputFile.close();
-		//»­µã
+		//ç”»ç‚¹
 		CRect rectPicture;
 		m_pic.GetClientRect(&rectPicture);
 		CDC* pDC = m_pic.GetDC();
-		CPen newPen;       // ÓÃÓÚ´´½¨ĞÂ»­±Ê   
-		CPen *pOldPen;     // ÓÃÓÚ´æ·Å¾É»­±Ê   
-		CBrush newBrush;   // ÓÃÓÚ´´½¨ĞÂ»­Ë¢   
-		CBrush *pOldBrush; // ÓÃÓÚ´æ·Å¾É»­Ë¢   
+		CPen newPen;       // ç”¨äºåˆ›å»ºæ–°ç”»ç¬”   
+		CPen *pOldPen;     // ç”¨äºå­˜æ”¾æ—§ç”»ç¬”   
+		CBrush newBrush;   // ç”¨äºåˆ›å»ºæ–°ç”»åˆ·   
+		CBrush *pOldBrush; // ç”¨äºå­˜æ”¾æ—§ç”»åˆ·   
   
-		// ´´½¨ºÚÉ«ĞÂ»­Ë¢   
+		// åˆ›å»ºé»‘è‰²æ–°ç”»åˆ·   
 		newBrush.CreateSolidBrush(RGB(0,0,0));   
-		// Ñ¡ÔñĞÂ»­Ë¢£¬²¢½«¾É»­Ë¢µÄÖ¸Õë±£´æµ½pOldBrush   
+		// é€‰æ‹©æ–°ç”»åˆ·ï¼Œå¹¶å°†æ—§ç”»åˆ·çš„æŒ‡é’ˆä¿å­˜åˆ°pOldBrush   
 		pOldBrush = pDC->SelectObject(&newBrush);   
-		// ÒÔºÚÉ«»­Ë¢Îª»æÍ¼¿Ø¼şÌî³äºÚÉ«£¬ĞÎ³ÉºÚÉ«±³¾°   
+		// ä»¥é»‘è‰²ç”»åˆ·ä¸ºç»˜å›¾æ§ä»¶å¡«å……é»‘è‰²ï¼Œå½¢æˆé»‘è‰²èƒŒæ™¯   
 		pDC->Rectangle(rectPicture);   
-		// »Ö¸´¾É»­Ë¢   
+		// æ¢å¤æ—§ç”»åˆ·   
 		pDC->SelectObject(pOldBrush);   
-		// É¾³ıĞÂ»­Ë¢   
+		// åˆ é™¤æ–°ç”»åˆ·   
 		newBrush.DeleteObject();   
   //
-		//// ´´½¨ÊµĞÄ»­±Ê£¬´Ö¶ÈÎª1£¬ÑÕÉ«Îª   
+		//// åˆ›å»ºå®å¿ƒç”»ç¬”ï¼Œç²—åº¦ä¸º1ï¼Œé¢œè‰²ä¸º   
 		newPen.CreatePen(PS_SOLID, 1, RGB(255,255,255));   
-		//// Ñ¡ÔñĞÂ»­±Ê£¬²¢½«¾É»­±ÊµÄÖ¸Õë±£´æµ½pOldPen   
+		//// é€‰æ‹©æ–°ç”»ç¬”ï¼Œå¹¶å°†æ—§ç”»ç¬”çš„æŒ‡é’ˆä¿å­˜åˆ°pOldPen   
 		pOldPen = pDC->SelectObject(&newPen);   
   //
-		//// ½«µ±Ç°µãÒÆ¶¯µ½»æÍ¼¿Ø¼ş´°¿ÚµÄ×óÏÂ½Ç£¬ÒÔ´ËÎª²¨ĞÎµÄÆğÊ¼µã   
+		//// å°†å½“å‰ç‚¹ç§»åŠ¨åˆ°ç»˜å›¾æ§ä»¶çª—å£çš„å·¦ä¸‹è§’ï¼Œä»¥æ­¤ä¸ºæ³¢å½¢çš„èµ·å§‹ç‚¹   
 		//pDC->MoveTo(rectPicture.left, rectPicture.bottom);   
 		
-		// ¼ÆËãm_nzValuesÊı×éÖĞÃ¿¸öµã¶ÔÓ¦µÄ×ø±êÎ»ÖÃ£¬²¢ÒÀ´ÎÁ¬½Ó£¬×îÖÕĞÎ³ÉÇúÏß   
+		// è®¡ç®—m_nzValuesæ•°ç»„ä¸­æ¯ä¸ªç‚¹å¯¹åº”çš„åæ ‡ä½ç½®ï¼Œå¹¶ä¾æ¬¡è¿æ¥ï¼Œæœ€ç»ˆå½¢æˆæ›²çº¿   
 		for (int i = 0; i < NODE_NUMBER; i++)   
 		{   
 			if(i == 0){
@@ -322,9 +322,9 @@ void CShowCaseDlg::OnEnChangeTimeEdit()
 			}
 		}   
   
-		//// »Ö¸´¾É»­±Ê   
+		//// æ¢å¤æ—§ç”»ç¬”   
 		pDC->SelectObject(pOldPen);   
-		//// É¾³ıĞÂ»­±Ê   
+		//// åˆ é™¤æ–°ç”»ç¬”   
 		newPen.DeleteObject(); 
 	}
 	
@@ -336,8 +336,8 @@ void CShowCaseDlg::OnStnClickedPicStatic()
 	CRect rect;
 	GetDlgItem(IDC_PIC_STATIC)->GetWindowRect(&rect);
 	//ScreenToClient(&rect);
-	//GetDlgItem(IDC_PIC_STATIC)->GetClientRect(&rect2);//»ñÈ¡¿Ø¼şµÄ¿Í»§Çø×ø±ê£¬ÀïÃæÃ»ÓĞ¼ÓÏµÍ³Çø×ø±ê
-	//ClientToScreen(&rect2);//×ª»»ÎªÆÁÄ»×ø±ê£¬¿Í»§Çø×ø±êÏà¶ÔÓÚÏµÍ³ÇøµÄ×ø±êÊÇ£¨12,12£©£¬¿ÉÒÔÍ¨¹ıÏÈ»ñµÃWindowRect£¬ÔÙ×ª»»screen2client
+	//GetDlgItem(IDC_PIC_STATIC)->GetClientRect(&rect2);//è·å–æ§ä»¶çš„å®¢æˆ·åŒºåæ ‡ï¼Œé‡Œé¢æ²¡æœ‰åŠ ç³»ç»ŸåŒºåæ ‡
+	//ClientToScreen(&rect2);//è½¬æ¢ä¸ºå±å¹•åæ ‡ï¼Œå®¢æˆ·åŒºåæ ‡ç›¸å¯¹äºç³»ç»ŸåŒºçš„åæ ‡æ˜¯ï¼ˆ12,12ï¼‰ï¼Œå¯ä»¥é€šè¿‡å…ˆè·å¾—WindowRectï¼Œå†è½¬æ¢screen2client
 	//
 	CPoint point;
 	GetCursorPos(&point);
@@ -432,7 +432,7 @@ void CShowCaseDlg::OnSize(UINT nType, int cx, int cy)
 {
     CDialog::OnSize(nType, cx, cy); 
     // TODO: Add your message handler code here
-    if(nType!=SIZE_MINIMIZED) //ÅĞ¶ÏÊÇ·ñÎª×îĞ¡»¯
+    if(nType!=SIZE_MINIMIZED) //åˆ¤æ–­æ˜¯å¦ä¸ºæœ€å°åŒ–
     {
     //ReSize(IDC_OK, cx, cy);
     GetClientRect(&m_rect);
@@ -442,7 +442,7 @@ void CShowCaseDlg::OnSize(UINT nType, int cx, int cy)
 
 void CShowCaseDlg::OnTimer(UINT_PTR nIDEvent)
 {
-	// TODO: ÔÚ´ËÌí¼ÓÏûÏ¢´¦Àí³ÌĞò´úÂëºÍ/»òµ÷ÓÃÄ¬ÈÏÖµ
+	// TODO: åœ¨æ­¤æ·»åŠ æ¶ˆæ¯å¤„ç†ç¨‹åºä»£ç å’Œ/æˆ–è°ƒç”¨é»˜è®¤å€¼
 
 	OnEnChangeTimeEdit();
 	KillTimer(nIDEvent);
@@ -454,8 +454,8 @@ void CShowCaseDlg::OnTimer(UINT_PTR nIDEvent)
 
 void CShowCaseDlg::OnStnDblclickPicStatic()
 {
-	// TODO: ÔÚ´ËÌí¼Ó¿Ø¼şÍ¨Öª´¦Àí³ÌĞò´úÂë
-	//MessageBox(__T("ALALA£¡"), _T("FAIL"), MB_OKCANCEL | MB_ICONQUESTION);
+	// TODO: åœ¨æ­¤æ·»åŠ æ§ä»¶é€šçŸ¥å¤„ç†ç¨‹åºä»£ç 
+	//MessageBox(__T("ALALAï¼"), _T("FAIL"), MB_OKCANCEL | MB_ICONQUESTION);
 	if(m_po){
 		return;
 	}
@@ -468,7 +468,7 @@ void CShowCaseDlg::OnStnDblclickPicStatic()
 
 void CShowCaseDlg::OnBnClickedRunbtn()
 {
-	// TODO: ÔÚ´ËÌí¼Ó¿Ø¼şÍ¨Öª´¦Àí³ÌĞò´úÂë
+	// TODO: åœ¨æ­¤æ·»åŠ æ§ä»¶é€šçŸ¥å¤„ç†ç¨‹åºä»£ç 
 	m_po = true;
 	ofstream initialPosFile("IniPos.txt", ios_base::out | ios_base::trunc);
 	if(initialPosFile.fail()){

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include"Node.h"
 
@@ -7,13 +7,13 @@ public:
 	Network( );
 	~Network();
 public:
-	void ConstructNetwork();//¹¹½¨Ò»¸öÍøÂç£¬½Úµã¾ùÔÈ·Ö²¼
-	void ConstructNetworkWithFixedPositon();//¹Ì¶¨Î»ÖÃµÄ½Úµã£¬´î½¨ÍøÂç
+	void ConstructNetwork();//æ„å»ºä¸€ä¸ªç½‘ç»œï¼ŒèŠ‚ç‚¹å‡åŒ€åˆ†å¸ƒ
+	void ConstructNetworkWithFixedPositon();//å›ºå®šä½ç½®çš„èŠ‚ç‚¹ï¼Œæ­å»ºç½‘ç»œ
 	void AdjustPostion();
-	void GatherInformation();//ÊÕ¼¯ÁÚ¾Ó½ÚµãµÄĞÅÏ¢£ºÆäÁÚ¾ÓµÄÁÚ¾ÓĞÅÏ¢£¨ÄÜÁ¿£¬¹¤×÷Ê±¼äµÈ£©
-	void MarkingProcess();//¸ù¾İ½ÚµãµÄÄÜÁ¿£¬¹¤×÷Ê±¼äµÈĞÅÏ¢±ê¼Ç½ÚµãÊÇ·ñÊÇGateway Node
-	void AddRules(const int &);//¾«¼òdominating setµÄ´óĞ¡
-	void PacketDelivery();//Êı¾İ²úÉú½×¶Î
+	void GatherInformation();//æ”¶é›†é‚»å±…èŠ‚ç‚¹çš„ä¿¡æ¯ï¼šå…¶é‚»å±…çš„é‚»å±…ä¿¡æ¯ï¼ˆèƒ½é‡ï¼Œå·¥ä½œæ—¶é—´ç­‰ï¼‰
+	void MarkingProcess();//æ ¹æ®èŠ‚ç‚¹çš„èƒ½é‡ï¼Œå·¥ä½œæ—¶é—´ç­‰ä¿¡æ¯æ ‡è®°èŠ‚ç‚¹æ˜¯å¦æ˜¯Gateway Node
+	void AddRules(const int &);//ç²¾ç®€dominating setçš„å¤§å°
+	void PacketDelivery();//æ•°æ®äº§ç”Ÿé˜¶æ®µ
 public:
 	void Run();
 };

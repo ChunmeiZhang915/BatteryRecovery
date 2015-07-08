@@ -1,5 +1,5 @@
-
-// ShowCaseDlg.h : Í·ÎÄ¼ş
+ï»¿
+// ShowCaseDlg.h : å¤´æ–‡ä»¶
 //
 
 #pragma once
@@ -9,25 +9,25 @@
 
 
 
-// CShowCaseDlg ¶Ô»°¿ò
+// CShowCaseDlg å¯¹è¯æ¡†
 class CShowCaseDlg : public CDialogEx
 {
-// ¹¹Ôì
+// æ„é€ 
 public:
-	CShowCaseDlg(CWnd* pParent = NULL);	// ±ê×¼¹¹Ôìº¯Êı
+	CShowCaseDlg(CWnd* pParent = NULL);	// æ ‡å‡†æ„é€ å‡½æ•°
 
-// ¶Ô»°¿òÊı¾İ
+// å¯¹è¯æ¡†æ•°æ®
 	enum { IDD = IDD_SHOWCASE_DIALOG };
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV Ö§³Ö
+	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV æ”¯æŒ
 
 
-// ÊµÏÖ
+// å®ç°
 protected:
 	HICON m_hIcon;
 
-	// Éú³ÉµÄÏûÏ¢Ó³Éäº¯Êı
+	// ç”Ÿæˆçš„æ¶ˆæ¯æ˜ å°„å‡½æ•°
 	virtual BOOL OnInitDialog();
 	void ReSize(int nID, int cx, int cy);
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
@@ -50,7 +50,7 @@ public:
 	CSpinButtonCtrl m_timeSpinCtrl;
 	LONGLONG m_currentTime;	
 	CStatic m_pic;
-	CRect m_rect;//±íÊ¾µ±Ç°¶Ô»°¿òµÄ´óĞ¡
+	CRect m_rect;//è¡¨ç¤ºå½“å‰å¯¹è¯æ¡†çš„å¤§å°
 	bool m_flag;
 	bool m_po;
 	Network* nt;

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include"Battery.h"
 const double Battery::m_normCapacity = INITIAL_NORM_ENERGY;
 vector<double> recoveryCurrent;
@@ -13,7 +13,7 @@ void Battery::Run(NodeWorkState nodeStatus, int relaxingTime ){
 	double tempRe = 0.0;
 	switch(nodeStatus){
 	case Sleeping:
-		//Èç¹ûÔÊĞíĞİÏ¢¸ü¾ÃµÄÊ±¼äµÄ»°£¬»Ö¸´µçÁ÷Îª0
+		//å¦‚æœå…è®¸ä¼‘æ¯æ›´ä¹…çš„æ—¶é—´çš„è¯ï¼Œæ¢å¤ç”µæµä¸º0
 		//m_currentCapacity -= (SLEEP_CONSUME * ((double)(1) / (double)(60)));
 		assert(relaxingTime < 15);
 		tempRe = recoveryCurrent[relaxingTime];

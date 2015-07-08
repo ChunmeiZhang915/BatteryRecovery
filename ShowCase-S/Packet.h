@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include<iostream>
 struct Packet{
 	Packet(int s, int t):source(s), TTL(t){}
